@@ -18,31 +18,6 @@ def plot_feature_importance(feature_importances, algo, columns):
     plt.show()
 
 
-def plot_education_level(data, title):
-    group = data.groupby(['education_level'], as_index=False).size()
-
-    fig, ax = plt.subplots(figsize=(12,5))
-
-    sns.barplot(x='education_level', y='size', data=group)
-
-    ax.set_ylabel('Count')
-    ax.set_xlabel('Education level')
-    ax.set_title(title)
-
-    plt.show()
-
-
-def plot_relation_duration(data, title):
-    bins = [0, 12, 24, 36, 48, float('inf')]
-    fig, ax = plt.subplots(figsize=(10,6))
-    mob_data = pd.cut(data['months_on_book'], bins=bins).astype(str)
-    mob_counts = mob_data.value_counts(normalize=True).sort_index()
-    sns.barplot(x=mob_counts.index, y=mob_counts.values)
-    ax.set_ylabel('Proportion')
-    ax.set_xlabel('Relation interval (months)')
-    ax.set_title(title)
-    plt.show()
-
 def plot_categorical_features(data: pd.DataFrame, target_col: str = 'attrition_flag'):
     classes = get_classes(data, target_col)
     data_by_class = {cls: data[data[target_col] == cls] for cls in classes}
