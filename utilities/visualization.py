@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -20,7 +21,7 @@ def plot_feature_importance(feature_importances, algo, columns):
 
 
 def plot_categorical_features(
-    data: pd.DataFrame, target_col: str = "attrition_flag", save: bool = False
+    data: pd.DataFrame, target_col: str = "attrition_flag", save_path: str = None
 ):
     classes = get_classes(data, target_col)
     data_by_class = {cls: data[data[target_col] == cls] for cls in classes}
@@ -41,15 +42,17 @@ def plot_categorical_features(
                 "Distribution of {} among {}".format(label.lower(), cls), fontsize=14
             )
             ax[idx].set_xticklabels(ax[idx].get_xticklabels(), rotation=45, ha="center")
-        if save:
-            plt.savefig("{}_distribution.jpg".format(cat_feature), **plt_save_config)
+        if save_path:
+            file_name = "{}_distribution.jpg".format(cat_feature)
+            full_save_path = os.path.join(save_path, file_name)
+            plt.savefig(full_save_path, **plt_save_config)
             plt.close()
         else:
             plt.show()
 
 
 def plot_numeric_features(
-    data: pd.DataFrame, target_col: str = "attrition_flag", save: bool = False
+    data: pd.DataFrame, target_col: str = "attrition_flag", save_path: str = None
 ):
     classes = get_classes(data, target_col)
     data_by_class = {cls: data[data[target_col] == cls] for cls in classes}
@@ -73,15 +76,17 @@ def plot_numeric_features(
             ax[idx].set_title(
                 "Distribution of {} among {}".format(label.lower(), cls), fontsize=14
             )
-        if save:
-            plt.savefig("{}_distribution.jpg".format(num_feature), **plt_save_config)
+        if save_path:
+            file_name = "{}_distribution.jpg".format(num_feature)
+            full_save_path = os.path.join(save_path, file_name)
+            plt.savefig(full_save_path, **plt_save_config)
             plt.close()
         else:
             plt.show()
 
 
 def plot_corr_hmap(
-    data: pd.DataFrame, target_col: str = "attrition_flag", save: bool = False
+    data: pd.DataFrame, target_col: str = "attrition_flag", save_path: str = None
 ):
     data[target_col] = label_encode(data[target_col], get_classes(data, target_col))
     corr = data.corr()
@@ -89,8 +94,9 @@ def plot_corr_hmap(
     plt.title("Correlation heatmap of variables")
     sns.heatmap(corr)
     plt.show()
-    if save:
-        plt.savefig("correlation_heatmap.jpg", **plt_save_config)
+    if save_path:
+        full_save_path = os.path.join(save_path, "correlation_heatmap.jpg")
+        plt.savefig(full_save_path, **plt_save_config)
         plt.close()
     else:
         plt.show()
