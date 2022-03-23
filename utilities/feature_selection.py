@@ -1,4 +1,5 @@
 from scipy.stats import chi2_contingency
+import pandas as pd
 
 
 def select_categorical_features(X, y, cat_cols):
