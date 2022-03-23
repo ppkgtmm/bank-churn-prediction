@@ -100,3 +100,21 @@ def plot_corr_hmap(
         plt.close()
     else:
         plt.show()
+
+
+def plot_labels(
+    data: pd.DataFrame, target_col: str = "attrition_flag", save_path: str = None
+):
+    flag_cnt = data[target_col].value_counts(normalize=True)
+    plt.figure(figsize=(8, 4))
+    ax = sns.barplot(y=flag_cnt.index, x=flag_cnt, orient="h")
+    ax.bar_label(ax.containers[0], padding=5)
+    plt.title("Distribution of attrition flag among customers")
+    plt.ylabel("Attrition flag")
+    plt.xlabel("Proportion")
+    if save_path:
+        full_save_path = os.path.join(save_path, "label_distribution.jpg")
+        plt.savefig(full_save_path, **plt_save_config)
+        plt.close()
+    else:
+        plt.show()
