@@ -6,22 +6,18 @@ import numpy as np
 oh_config = dict(handle_unknown="ignore", sparse=False, dtype=np.int8)
 
 
-def get_feature_preprocessors(X, cat_cols, num_cols):
-    pipe_std = ColumnTransformer(
+def get_feature_preprocessor(X, cat_cols, num_cols, std=True):
+    num_processor = ("standard_scaler", StandardScaler(), num_cols)
+    if not std:
+        num_processor = ("min_max", MinMaxScaler(), num_cols)
+
+    preprocessor = ColumnTransformer(
         [
             ("OH_encoder", OneHotEncoder(**oh_config), cat_cols),
-            ("standard_scaler", StandardScaler(), num_cols),
+            num_processor,
         ]
     ).fit(X)
-
-    pipe_mm = ColumnTransformer(
-        [
-            ("OH_encoder", OneHotEncoder(**oh_config), cat_cols),
-            ("min_max", MinMaxScaler(), num_cols),
-        ]
-    ).fit(X)
-
-    return {"std": pipe_std, "min_max": pipe_mm}
+    return preprocessor, preprocessor.transformers_[0][1].get_feature_names_out()
 
 
 def label_encode(y, classes):
