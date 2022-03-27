@@ -20,5 +20,9 @@ def serialize_df(df: pd.DataFrame, orient=json_orient):
     return df.to_json(orient=orient)
 
 
+def serialize_series(series: pd.Series, orient=json_orient):
+    return series.to_json(orient=orient)
+
+
 def deserialize_df(json_str, orient=json_orient):
     return pd.read_json(str(json_str), orient=orient)
