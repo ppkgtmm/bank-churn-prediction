@@ -6,7 +6,7 @@ import numpy as np
 oh_config = dict(handle_unknown="ignore", sparse=False, dtype=np.int8)
 
 
-def get_feature_preprocessor(X, cat_cols, num_cols, std=True):
+def get_feature_preprocessor(data, cat_cols, num_cols, std=True):
     num_processor = StandardScaler()
     if std == False:
         num_processor = MinMaxScaler()
@@ -16,7 +16,7 @@ def get_feature_preprocessor(X, cat_cols, num_cols, std=True):
             ("OH_encoder", OneHotEncoder(**oh_config), cat_cols),
             ("num_preprocessor", num_processor, num_cols),
         ]
-    ).fit(X)
+    ).fit(data)
 
     col_names = (
         preprocessor.transformers_[0][1].get_feature_names_out().tolist() + num_cols
