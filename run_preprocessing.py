@@ -6,9 +6,7 @@ from utilities import (
     label_encode,
     get_classes,
 )
-
 import pandas as pd
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
 data_path = "data/bank_churners.csv"
@@ -68,23 +66,3 @@ X_test_mm = pd.DataFrame(X_test_mm, columns=prep_cols, index=X_test.index)
 
 train_prep = pd.concat([y_train, X_train_mm], axis=1)
 test_prep = pd.concat([y_test, X_test_mm], axis=1)
-
-# print(train_prep.isna().sum())
-# print(test_prep.isna().sum())
-
-# print(train.shape, test.shape, train.columns)
-# print(
-#     train[target_col].value_counts(normalize=True),
-#     test[target_col].value_counts(normalize=True),
-# )
-# print(
-#     (StandardScaler().fit_transform(X_train[num_cols]) != X_train_std[num_cols])
-#     .sum()
-#     .sum(),
-#     (MinMaxScaler().fit_transform(X_train[num_cols]) != X_train_mm[num_cols])
-#     .sum()
-#     .sum(),
-# )
-# print(X_train_std.head())
-# print(X_train_mm.head())
-# print(y_train)
