@@ -2,9 +2,15 @@ import os
 from datetime import datetime
 from constants import *
 import pandas as pd
-from utilities.data import read_data, lower_strings
+from utilities.data import (
+    read_data,
+    lower_strings,
+    serialize_df,
+    deserialize_df,
+    serialize_series,
+)
 from utilities.feature_selection import select_categorical_features
-from utilities.preprocess import get_preprocessor
+from utilities.preprocess import get_feature_preprocessor, label_encode
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash import BashOperator
@@ -26,23 +32,15 @@ default_args = dict(
 std_kwargs = dict(
     train_key=prep_std_train_key,
     test_key=prep_std_test_key,
-    columns_key=columns_key_std,
+    # columns_key=columns_key_std,
     out_dir=std_out_dir,
 )
 mm_kwargs = dict(
     train_key=prep_mm_train_key,
     test_key=prep_mm_test_key,
-    columns_key=columns_key_mm,
+    # columns_key=columns_key_mm,
     out_dir=minmax_out_dir,
 )
-
-
-def serialize_df(df: pd.DataFrame, orient=json_orient):
-    return df.to_json(orient=orient)
-
-
-def deserialize_df(json_str, orient=json_orient):
-    return pd.read_json(str(json_str), orient=orient)
 
 
 def read_data_wrapper():
@@ -58,62 +56,91 @@ def read_data_wrapper():
 
 def split_data_wrapper(ti):
     data = deserialize_df(ti.xcom_pull(task_ids=read_data_task_id))
+
     train, test = train_test_split(
         data,
         test_size=test_size,
         random_state=seed,
         stratify=data[target_col],
     )
+
     ti.xcom_push(key=train_set_key, value=serialize_df(train))
     ti.xcom_push(key=test_set_key, value=serialize_df(test))
 
 
 def select_categorical_features_wrapper(ti):
     train = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=train_set_key))
+
     features, target = train.drop(columns=[target_col]), train[target_col]
     cat_cols = features.select_dtypes(include=["object"]).columns
+
     return select_categorical_features(features, target, cat_cols)
 
 
-def preprocess_wrapper(ti, **kwargs):
+def preprocess_feature_wrapper(ti, **kwargs):
     cat_cols = ti.xcom_pull(task_ids=select_features_task_id)
     train = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=train_set_key))
     test = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=test_set_key))
+
     num_cols = list(
         train.drop(columns=[target_col]).select_dtypes(exclude=["object"]).columns
     )
-    preprocessor, col_names = get_preprocessor(
-        train, cat_cols, num_cols, target_col, kwargs.get("std", True)
+
+    preprocessor, col_names = get_feature_preprocessor(
+        train, cat_cols, num_cols, kwargs.get("std")
     )
+
     out_file_name = os.path.join(kwargs.get("out_dir", ""), preprocessor_fname)
     with open(out_file_name, "wb") as out_file:
         pickle.dump(preprocessor, out_file)
 
-    ti.xcom_push(
-        key=kwargs.get("train_key"), value=preprocessor.transform(train).tolist()
+    X_train_prep = pd.DataFrame(
+        preprocessor.transform(train), index=train.index, columns=col_names
     )
-    ti.xcom_push(
-        key=kwargs.get("test_key"), value=preprocessor.transform(test).tolist()
+    X_test_prep = pd.DataFrame(
+        preprocessor.transform(test), index=test.index, columns=col_names
     )
-    ti.xcom_push(key=kwargs.get("columns_key"), value=col_names)
+
+    ti.xcom_push(key=kwargs.get("train_key"), value=serialize_df(X_train_prep))
+    ti.xcom_push(key=kwargs.get("test_key"), value=serialize_df(X_test_prep))
 
 
-def save_data(ti, **kwargs):
-    prep_task_id = kwargs.get("prep_task_id")
-    col_names = ti.xcom_pull(task_ids=prep_task_id, key=kwargs.get("columns_key"))
-    train = pd.DataFrame(
-        ti.xcom_pull(task_ids=prep_task_id, key=kwargs.get("train_key")),
-        columns=col_names,
+def preprocess_target_wrapper(ti):
+    train = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=train_set_key))
+    test = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=test_set_key))
+
+    ti.xcom_push(
+        key=prep_label_train_key,
+        value=serialize_series(label_encode(train[target_col])),
     )
+    ti.xcom_push(
+        key=prep_label_test_key, value=serialize_series(label_encode(test[target_col]))
+    )
+
+
+def save_data_wrapper(ti, **kwargs):
+    feat_prep_task_id = kwargs.get("feat_prep_task_id")
+
+    X_train = deserialize_df(
+        ti.xcom_pull(task_ids=feat_prep_task_id, key=kwargs.get("train_key"))
+    )
+    y_train = deserialize_df(
+        ti.xcom_pull(task_ids=preprocess_target_task_id, key=prep_label_train_key)
+    )
+
     train_out_name = os.path.join(kwargs.get("out_dir", ""), train_fname)
-    train.to_csv(train_out_name, index=False)
+    pd.concat([y_train, X_train], axis=1).reset_index().to_csv(
+        train_out_name, index=False
+    )
 
-    test = pd.DataFrame(
-        ti.xcom_pull(task_ids=prep_task_id, key=kwargs.get("test_key")),
-        columns=col_names,
+    X_test = deserialize_df(
+        ti.xcom_pull(task_ids=feat_prep_task_id, key=kwargs.get("test_key"))
+    )
+    y_test = deserialize_df(
+        ti.xcom_pull(task_ids=preprocess_target_task_id, key=prep_label_test_key)
     )
     test_out_name = os.path.join(kwargs.get("out_dir", ""), test_fname)
-    test.to_csv(test_out_name, index=False)
+    pd.concat([y_test, X_test], axis=1).reset_index().to_csv(test_out_name, index=False)
 
 
 with DAG(
@@ -142,23 +169,27 @@ with DAG(
     )
     preprocess_std_task = PythonOperator(
         task_id=preprocess_std_task_id,
-        python_callable=preprocess_wrapper,
+        python_callable=preprocess_feature_wrapper,
         op_kwargs=std_kwargs,
     )
     preprocess_minmax_task = PythonOperator(
         task_id=preprocess_minmax_task_id,
-        python_callable=preprocess_wrapper,
+        python_callable=preprocess_feature_wrapper,
         op_kwargs=dict(std=False, **mm_kwargs),
+    )
+    preprocess_target_task = PythonOperator(
+        task_id=preprocess_target_task_id,
+        python_callable=preprocess_target_wrapper,
     )
     save_std_task = PythonOperator(
         task_id=std_save_task_id,
-        python_callable=save_data,
-        op_kwargs=dict(prep_task_id=preprocess_std_task_id, **std_kwargs),
+        python_callable=save_data_wrapper,
+        op_kwargs=dict(feat_prep_task_id=preprocess_std_task_id, **std_kwargs),
     )
     save_minmax_task = PythonOperator(
         task_id=minmax_save_task_id,
-        python_callable=save_data,
-        op_kwargs=dict(prep_task_id=preprocess_minmax_task_id, **mm_kwargs),
+        python_callable=save_data_wrapper,
+        op_kwargs=dict(feat_prep_task_id=preprocess_minmax_task_id, **mm_kwargs),
     )
     # need to add sqlite connection in airflow UI (host = path to db file)
     delete_xcom_task = SqliteOperator(
@@ -166,9 +197,11 @@ with DAG(
         sqlite_conn_id=sqlite_conn_id,
         sql=delete_xcom_sql.format(dag.dag_id),
     )
+
     (
         read_data_task
         >> split_data_task
+        >> preprocess_target_task
         >> select_features_task
         >> [create_dir_std_task, create_dir_mm_task]
     )
