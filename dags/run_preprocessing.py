@@ -175,21 +175,3 @@ with DAG(
     create_dir_std_task >> preprocess_std_task >> save_std_task
     create_dir_mm_task >> preprocess_minmax_task >> save_minmax_task
     [save_std_task, save_minmax_task] >> delete_xcom_task
-
-# def get_classes_wrapper(ti):
-#     data = ti.xcom_pull(task_ids="read_data")
-#     data = pd.read_json(data, orient=json_orient)
-#     return get_classes(data, target_col)
-
-
-# def preprocess_target(data, target_col, classes):
-#     return pd.Series(
-#         label_encode(data[target_col], classes), name=target_col, index=data.index
-#     )
-
-
-# def run():
-#     data = read_data(data_path, index_col=index_col)
-#     classes = get_classes(data, target_col)
-#     target = preprocess_target(data, target_col, classes)
-#     print(target)
