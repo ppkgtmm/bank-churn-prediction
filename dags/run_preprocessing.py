@@ -3,6 +3,7 @@ from datetime import datetime
 from constants import *
 import pandas as pd
 from utilities.data import (
+    get_classes,
     read_data,
     lower_strings,
     serialize_df,
@@ -19,6 +20,7 @@ from sklearn.model_selection import train_test_split
 import pickle
 
 project_root = os.path.abspath(".")
+index_column = index_col.lower()
 
 default_args = dict(
     owner="airflow",
@@ -28,6 +30,7 @@ default_args = dict(
     email_on_retry=False,
     schedule_interval="@daily",
     max_active_runs=1,  # no concurrent runs
+    catchup=False,
 )
 std_kwargs = dict(
     train_key=prep_std_train_key,
@@ -44,7 +47,7 @@ mm_kwargs = dict(
 
 
 def read_data_wrapper():
-    data = read_data(data_path, index_col)
+    data = pd.read_csv(data_path)
 
     data.drop(columns=drop_col, inplace=True)
 
@@ -72,7 +75,9 @@ def select_categorical_features_wrapper(ti):
     train = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=train_set_key))
 
     features, target = train.drop(columns=[target_col]), train[target_col]
-    cat_cols = features.select_dtypes(include=["object"]).columns
+    cat_cols = (
+        features.set_index(index_column).select_dtypes(include=["object"]).columns
+    )
 
     return select_categorical_features(features, target, cat_cols)
 
@@ -83,7 +88,10 @@ def preprocess_feature_wrapper(ti, **kwargs):
     test = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=test_set_key))
 
     num_cols = list(
-        train.drop(columns=[target_col]).select_dtypes(exclude=["object"]).columns
+        train.drop(columns=[target_col])
+        .set_index(index_column)
+        .select_dtypes(exclude=["object"])
+        .columns
     )
 
     preprocessor, col_names = get_feature_preprocessor(
@@ -94,12 +102,11 @@ def preprocess_feature_wrapper(ti, **kwargs):
     with open(out_file_name, "wb") as out_file:
         pickle.dump(preprocessor, out_file)
 
-    X_train_prep = pd.DataFrame(
-        preprocessor.transform(train), index=train.index, columns=col_names
-    )
-    X_test_prep = pd.DataFrame(
-        preprocessor.transform(test), index=test.index, columns=col_names
-    )
+    X_train_prep = pd.DataFrame(preprocessor.transform(train), columns=col_names)
+    X_test_prep = pd.DataFrame(preprocessor.transform(test), columns=col_names)
+
+    X_train_prep[index_column] = train[index_column].values
+    X_test_prep[index_column] = test[index_column].values
 
     ti.xcom_push(key=kwargs.get("train_key"), value=serialize_df(X_train_prep))
     ti.xcom_push(key=kwargs.get("test_key"), value=serialize_df(X_test_prep))
@@ -108,14 +115,26 @@ def preprocess_feature_wrapper(ti, **kwargs):
 def preprocess_target_wrapper(ti):
     train = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=train_set_key))
     test = deserialize_df(ti.xcom_pull(task_ids=split_data_task_id, key=test_set_key))
+    classes = get_classes(train, target_col)
 
-    ti.xcom_push(
-        key=prep_label_train_key,
-        value=serialize_series(label_encode(train[target_col])),
+    df_cols = [target_col]
+    y_train_prep = pd.DataFrame(
+        label_encode(train[target_col], classes), columns=df_cols
     )
-    ti.xcom_push(
-        key=prep_label_test_key, value=serialize_series(label_encode(test[target_col]))
-    )
+    y_test_prep = pd.DataFrame(label_encode(test[target_col], classes), columns=df_cols)
+    ti.xcom_push(key=prep_label_train_key, value=serialize_df(y_train_prep))
+    ti.xcom_push(key=prep_label_test_key, value=serialize_df(y_test_prep))
+
+
+def save_data(X, y, out_dir, f_name):
+    index_cols = [index_column]
+    out_name = os.path.join(out_dir, f_name)
+    feature_cols = list(X.drop(columns=index_cols).columns)
+    out = X
+    out[target_col] = y.values
+    # make data same format as original
+    out = X[index_cols + [target_col] + feature_cols]
+    out.to_csv(out_name, index=False)
 
 
 def save_data_wrapper(ti, **kwargs):
@@ -128,10 +147,11 @@ def save_data_wrapper(ti, **kwargs):
         ti.xcom_pull(task_ids=preprocess_target_task_id, key=prep_label_train_key)
     )
 
-    train_out_name = os.path.join(kwargs.get("out_dir", ""), train_fname)
-    pd.concat([y_train, X_train], axis=1).reset_index().to_csv(
-        train_out_name, index=False
-    )
+    save_data(X_train, y_train, kwargs.get("out_dir", ""), train_fname)
+    # train_out_name = os.path.join(kwargs.get("out_dir", ""), train_fname)
+    # pd.concat([y_train, X_train], axis=1).to_csv(
+    #     train_out_name, index_label=index_column
+    # )
 
     X_test = deserialize_df(
         ti.xcom_pull(task_ids=feat_prep_task_id, key=kwargs.get("test_key"))
@@ -139,8 +159,10 @@ def save_data_wrapper(ti, **kwargs):
     y_test = deserialize_df(
         ti.xcom_pull(task_ids=preprocess_target_task_id, key=prep_label_test_key)
     )
-    test_out_name = os.path.join(kwargs.get("out_dir", ""), test_fname)
-    pd.concat([y_test, X_test], axis=1).reset_index().to_csv(test_out_name, index=False)
+
+    save_data(X_test, y_test, kwargs.get("out_dir", ""), test_fname)
+    # test_out_name = os.path.join(kwargs.get("out_dir", ""), test_fname)
+    # pd.concat([y_test, X_test], axis=1).to_csv(test_out_name, index_label=index_column)
 
 
 with DAG(
