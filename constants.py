@@ -1,6 +1,6 @@
 data_path = "data/bank_churners.csv"
 target_col = "attrition_flag"
-index_col = ["CLIENTNUM"]
+index_col = "CLIENTNUM"
 drop_col = [
     "Avg_Open_To_Buy",
     "Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_1",
