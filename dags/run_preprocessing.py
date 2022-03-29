@@ -4,11 +4,9 @@ from constants import *
 import pandas as pd
 from utilities.data import (
     get_classes,
-    read_data,
     lower_strings,
     serialize_df,
     deserialize_df,
-    serialize_series,
 )
 from utilities.feature_selection import select_categorical_features
 from utilities.preprocess import get_feature_preprocessor, label_encode
@@ -35,13 +33,11 @@ default_args = dict(
 std_kwargs = dict(
     train_key=prep_std_train_key,
     test_key=prep_std_test_key,
-    # columns_key=columns_key_std,
     out_dir=std_out_dir,
 )
 mm_kwargs = dict(
     train_key=prep_mm_train_key,
     test_key=prep_mm_test_key,
-    # columns_key=columns_key_mm,
     out_dir=minmax_out_dir,
 )
 
@@ -148,10 +144,6 @@ def save_data_wrapper(ti, **kwargs):
     )
 
     save_data(X_train, y_train, kwargs.get("out_dir", ""), train_fname)
-    # train_out_name = os.path.join(kwargs.get("out_dir", ""), train_fname)
-    # pd.concat([y_train, X_train], axis=1).to_csv(
-    #     train_out_name, index_label=index_column
-    # )
 
     X_test = deserialize_df(
         ti.xcom_pull(task_ids=feat_prep_task_id, key=kwargs.get("test_key"))
@@ -161,8 +153,6 @@ def save_data_wrapper(ti, **kwargs):
     )
 
     save_data(X_test, y_test, kwargs.get("out_dir", ""), test_fname)
-    # test_out_name = os.path.join(kwargs.get("out_dir", ""), test_fname)
-    # pd.concat([y_test, X_test], axis=1).to_csv(test_out_name, index_label=index_column)
 
 
 with DAG(
