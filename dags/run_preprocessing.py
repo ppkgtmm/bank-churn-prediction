@@ -28,7 +28,7 @@ default_args = dict(
     email_on_retry=False,
     schedule_interval="@daily",
     max_active_runs=1,  # no concurrent runs
-    catchup=False,
+    catchup=False,  # no auto run
 )
 std_kwargs = dict(
     train_key=prep_std_train_key,
