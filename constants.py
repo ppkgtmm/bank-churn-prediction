@@ -52,3 +52,5 @@ dt_algo = "Decision Tree"
 rf_algo = "Random Forest"
 lr_algo = "Logistic Regression"
 svm_algo = "Support Vector Machine"
+
+report_cmap = "YlGnBu"
