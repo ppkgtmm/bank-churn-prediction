@@ -47,3 +47,8 @@ minmax_out_dir = "outputs/min_max"
 preprocessor_fname = "preprocessor.pkl"
 train_fname = "train.csv"
 test_fname = "test.csv"
+
+dt_algo = "Decision Tree"
+rf_algo = "Random Forest"
+lr_algo = "Logistic Regression"
+svm_algo = "Support Vector Machine"
