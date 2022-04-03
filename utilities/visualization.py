@@ -8,15 +8,6 @@ from .preprocess import label_encode
 plt_save_config = dict(dpi=200, bbox_inches="tight")
 
 
-def plot_column_values(values, columns, title):
-    plt.figure(figsize=(8, 6))
-    df = pd.DataFrame({"column": columns, "value": values})
-    df = df.sort_values("value", ascending=False)
-    sns.barplot(y="column", x="value", data=df, orient="h", palette="muted")
-    plt.title(title)
-    plt.show()
-
-
 def plot_categorical_features(
     data: pd.DataFrame, target_col: str = "attrition_flag", save_path: str = None
 ):
