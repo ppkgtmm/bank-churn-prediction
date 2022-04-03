@@ -10,11 +10,9 @@ plt_save_config = dict(dpi=200, bbox_inches="tight")
 
 def plot_feature_importance(feature_importances, algo, columns):
     plt.figure(figsize=(8, 6))
-    imp_df = (
-        pd.DataFrame({"column": columns, "importance": feature_importances})
-        .sort_values("importance", ascending=False)
-        .query("abs(importance) > 0")
-    )
+    imp_df = pd.DataFrame(
+        {"column": columns, "importance": feature_importances}
+    ).sort_values("importance", ascending=False)
     sns.barplot(y="column", x="importance", data=imp_df, orient="h", palette="muted")
     plt.title("feature importance for {} model".format(algo), fontdict={"size": 16})
     plt.show()
