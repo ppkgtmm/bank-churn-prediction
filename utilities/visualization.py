@@ -8,13 +8,12 @@ from .preprocess import label_encode
 plt_save_config = dict(dpi=200, bbox_inches="tight")
 
 
-def plot_feature_importance(feature_importances, algo, columns):
+def plot_column_values(ax, values, columns, title):
     plt.figure(figsize=(8, 6))
-    imp_df = pd.DataFrame(
-        {"column": columns, "importance": feature_importances}
-    ).sort_values("importance", ascending=False)
-    sns.barplot(y="column", x="importance", data=imp_df, orient="h", palette="muted")
-    plt.title("feature importance for {} model".format(algo), fontdict={"size": 16})
+    df = pd.DataFrame({"column": columns, "value": values})
+    df = df.sort_values("value", ascending=False)
+    sns.barplot(y="column", x="value", data=df, orient="h", palette="muted", ax=ax)
+    plt.title(title)
     plt.show()
 
 
