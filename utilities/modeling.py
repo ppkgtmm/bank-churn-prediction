@@ -13,10 +13,8 @@ algo_map = {
 
 
 def do_moedeling(X_train, y_train):
-    models = []
-    algos = []
+    models = {}
     for algo, cls in algo_map.items():
-        algos.append(algo)
         model = cls(random_state=seed, class_weight="balanced").fit(X_train, y_train)
-        models.append(model)
-    return algos, models
+        models[algo] = model
+    return models
