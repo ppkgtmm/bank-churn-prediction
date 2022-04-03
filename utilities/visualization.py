@@ -8,11 +8,11 @@ from .preprocess import label_encode
 plt_save_config = dict(dpi=200, bbox_inches="tight")
 
 
-def plot_column_values(ax, values, columns, title):
+def plot_column_values(values, columns, title):
     plt.figure(figsize=(8, 6))
     df = pd.DataFrame({"column": columns, "value": values})
     df = df.sort_values("value", ascending=False)
-    sns.barplot(y="column", x="value", data=df, orient="h", palette="muted", ax=ax)
+    sns.barplot(y="column", x="value", data=df, orient="h", palette="muted")
     plt.title(title)
     plt.show()
 
