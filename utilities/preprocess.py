@@ -1,6 +1,7 @@
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 import numpy as np
+import pandas as pd
 
 
 oh_config = dict(handle_unknown="ignore", sparse=False, dtype=np.int8)
@@ -29,6 +30,6 @@ def label_encode(y, classes):
     return y.map(lambda x: label_map[x])
 
 
-def invert_label(y, classes):
+def decode_label(y, classes):
     inverse_map = {k: v for k, v in enumerate(classes)}
     return y.map(lambda x: inverse_map[x])
