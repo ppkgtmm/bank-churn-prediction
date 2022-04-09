@@ -6,7 +6,7 @@
 
 ## Process
 ### Exploration
-- Includes target, features (numerical and categorical) distribution analysis for each target class as well as correlation analysis
+- Includes target distribution analysis, features (numerical and categorical) distribution analysis for each target class as well as correlation analysis
 - See [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb) for more information
 
 ### Preprocessing
