@@ -95,7 +95,7 @@ pip3 install notebook
 jupyter notebook
 ```
 
-2. Navigate to project folder in the browser tab opened by jupyter
+2. Navigate to project folder in the browser tab automatically opened by jupyter
 3. Open notebook file and run cells (control + Enter) starting from the top
 
 ### Preprocessing
