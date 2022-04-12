@@ -56,3 +56,65 @@
 
 ![image](https://user-images.githubusercontent.com/57994731/163004429-378bb741-8cd6-4dfb-87b7-bc77796d8dc2.png)
 ![image](https://user-images.githubusercontent.com/57994731/163004534-5885f183-27d1-4128-9816-b5f629c9d2ed.png)
+
+## Set up
+
+- Make sure you are in project directory inside your shell (bash prefered)
+
+### Initialization
+
+#### Part 1
+
+- Only required for the first time running this project
+
+1. Run init script
+
+```sh
+. ./init.sh
+```
+
+2. Install jupyter notebook (useful for exploration and modeling part)
+
+```sh
+pip3 install notebook
+```
+
+#### Part 2
+
+- Required for every time you are running this project
+
+```sh
+. ./setup.sh
+```
+
+### Exploration or Modeling
+
+1. Start jupyter notebook server
+
+```
+jupyter notebook
+```
+
+2. Navigate to project folder in the browser tab opened by jupyter
+3. Open notebook file and run cells (control + Enter) starting from the top
+
+### Preprocessing
+
+1. Open 2 terminal windows / tabs
+2. In the both terminals, run **Part 2** of **Initialization** step
+3. In the first terminal, run below to start airflow web server
+
+```sh
+airflow webserver -p 8080
+```
+
+4. In the second terminal, run below to start airflow scheduler
+
+```sh
+airflow scheduler
+```
+
+5. Navigate to airflow web UI at `http://localhost:8080/`, search for `preprocessing_dag` and click at the DAG name
+6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder of project directory)
+
+### Inference
