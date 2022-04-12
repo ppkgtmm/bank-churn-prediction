@@ -29,7 +29,7 @@
 
 ### Inference
 
-- An API is developed to serve predictions from model based on input data provided to `POST /predict` endpoint
+- An API is developed to serve predictions from model based on input data provided to `/predict` endpoint
 - Sample input from data originally labeled as existing customer but some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb)). Consequently, the customer is categorized as churning
 
 ```json
