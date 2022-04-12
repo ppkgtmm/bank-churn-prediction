@@ -57,7 +57,7 @@
 ![image](https://user-images.githubusercontent.com/57994731/163004429-378bb741-8cd6-4dfb-87b7-bc77796d8dc2.png)
 ![image](https://user-images.githubusercontent.com/57994731/163004534-5885f183-27d1-4128-9816-b5f629c9d2ed.png)
 
-## Set up
+## Run the project
 
 - Make sure you are in project directory inside your shell (bash prefered)
 
@@ -81,7 +81,7 @@ pip3 install notebook
 
 #### Part 2
 
-- Required for every time you are running this project
+- Required for every time you are running part of this project in a new shell
 
 ```sh
 . ./setup.sh
@@ -118,3 +118,10 @@ airflow scheduler
 6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder of project directory)
 
 ### Inference
+
+```sh
+uvicorn app:app --reload
+```
+
+- Running command above will start API server at `http://localhost:8000`
+- API explorer (Swagger UI) is available at `http://localhost:8000/docs`
