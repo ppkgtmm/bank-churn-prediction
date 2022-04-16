@@ -132,6 +132,7 @@ uvicorn app:app --reload
 - [apache-airflow-quick-start](https://airflow.apache.org/docs/apache-airflow/stable/start/local.html)
 - [apache-airflow-modules-management](https://airflow.apache.org/docs/apache-airflow/stable/modules_management.html)
 - [importing-local-module-python-script-in-airflow-dag](https://stackoverflow.com/questions/50150384/importing-local-module-python-script-in-airflow-dag)
+- [pandas-dataframe-styling-color-palette](https://pandas.pydata.org/docs/user_guide/style.html)
 - [sklearn-model-selection-randomized-search-cv](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html)
 - [sklearn-metrics-make-scorer](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html)
 - [saving-and-loading-objects-and-using-pickle](https://stackoverflow.com/questions/4530611/saving-and-loading-objects-and-using-pickle)
