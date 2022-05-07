@@ -20,8 +20,8 @@ def plot_categorical_features(
         fig, ax = plt.subplots(1, len(classes), figsize=(12, 5))
 
         for idx, cls in enumerate(data_by_class.keys()):
-            group = data_by_class[cls].groupby(cat_feature).size()
-            group = (group / group.sum()).reset_index()
+            group = data_by_class[cls].groupby(cat_feature).size().reset_index()
+            # group = (group / group.sum()).reset_index()
             label = " ".join(str(cat_feature).split("_"))
             sns.barplot(x=cat_feature, y=0, data=group, ax=ax[idx])
             ax[idx].set_ylabel("Count")
@@ -30,6 +30,13 @@ def plot_categorical_features(
                 "Distribution of {} among {}".format(label.lower(), cls), fontsize=14
             )
             ax[idx].set_xticklabels(ax[idx].get_xticklabels(), rotation=45, ha="center")
+            ax[idx].bar_label(
+                ax[idx].containers[0],
+                [
+                    "{0:.1f}%".format(label)
+                    for label in (group[0] * 100 / group[0].sum()).tolist()
+                ],
+            )
         if save_path:
             file_name = "{}_distribution.jpg".format(cat_feature)
             full_save_path = os.path.join(save_path, file_name)
@@ -93,13 +100,20 @@ def plot_corr_hmap(
 def plot_labels(
     data: pd.DataFrame, target_col: str = "attrition_flag", save_path: str = None
 ):
-    flag_cnt = data[target_col].value_counts(normalize=True)
+    flag_cnt = data[target_col].value_counts()
     plt.figure(figsize=(8, 4))
     ax = sns.barplot(y=flag_cnt.index, x=flag_cnt, orient="h")
-    ax.bar_label(ax.containers[0], padding=5)
+    ax.bar_label(
+        ax.containers[0],
+        [
+            "{0:.1f}%".format(label)
+            for label in (flag_cnt * 100 / flag_cnt.sum()).tolist()
+        ],
+        padding=5,
+    )
     plt.title("Distribution of attrition flag among customers")
     plt.ylabel("Attrition flag")
-    plt.xlabel("Proportion")
+    plt.xlabel("Count")
     if save_path:
         full_save_path = os.path.join(save_path, "label_distribution.jpg")
         plt.savefig(full_save_path, **plt_save_config)
