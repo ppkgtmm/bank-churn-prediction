@@ -14,9 +14,10 @@
 ### Preprocessing
 
 - Apache Airflow was used to build data preprocessing pipeline (DAG) as illustrated in the image below
-  <img width=900 src="https://user-images.githubusercontent.com/57994731/162579282-daf97e8c-e9d8-4f4c-8b2f-912ae1f21570.png" />
 
-- In the DAG diagram above, data is loaded from disk and split into train and test sets. Since target preprocessing is the same regardless of feature preprocessing method, target is preprocessed before the split in diagram. As well, categorical features are selected before preprocessing then there is a split in diagram to preprocess features using different scalers in parallel. Finally, there is a task for freeing up the space used by xcom.
+  <img width=900 src="https://user-images.githubusercontent.com/57994731/167464520-505f82c0-07e5-4c48-8656-bc8ceda6fa53.png" />
+
+- In the DAG diagram above, firstly the data is loaded to a temporary directory created before; then the data is split into train and test sets. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parrallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
 
 ### Modeling and tuning
 
