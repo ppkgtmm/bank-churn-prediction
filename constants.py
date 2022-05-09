@@ -7,39 +7,28 @@ drop_col = [
     "Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_2",
 ]
 
-json_orient = "split"
 seed = 42
 test_size = 0.15
 
-read_data_task_id = "read_data"
-split_data_task_id = "split_data"
-select_features_task_id = "select_categorical_features"
+temp_dir_task_id = "1.create_temp_dir"
+read_data_task_id = "2.read_data"
+split_data_task_id = "3.split_data"
 
-preprocess_std_task_id = "preprocess_std"
-preprocess_minmax_task_id = "preprocess_minmax"
-preprocess_target_task_id = "preprocess_target"
+std_dir_task_id = "4.create_std_dir"
+select_features_task_id = "5.select_categorical_features"
+minmax_dir_task_id = "6.create_minmax_dir"
 
-std_dir_task_id = "create_std_dir"
-minmax_dir_task_id = "create_minmax_dir"
+create_prep_std_task_id = "7.create_preprocessor_std"
+create_prep_minmax_task_id = "8.create_preprocessor_minmax"
 
-std_save_task_id = "save_std_data"
-minmax_save_task_id = "save_minmax_data"
+preprocess_std_task_id = "9.preprocess_std"
+preprocess_minmax_task_id = "10.preprocess_minmax"
 
-delete_xcom_task_id = "clean_up"
+remove_temp_dir_task_id = "11.remove_temp_dir"
+cleanup_task_id = "12.clean_up"
 
 sqlite_conn_id = "x_com_sqlite"
-delete_xcom_sql = "delete from xcom where dag_id='{}'"
-
-train_set_key = "train_set"
-test_set_key = "test_set"
-prep_std_train_key = "train_X_std"
-prep_std_test_key = "test_X_std"
-prep_mm_train_key = "train_X_mm"
-prep_mm_test_key = "test_X_mm"
-prep_label_train_key = "train_y"
-prep_label_test_key = "test_y"
-columns_key_std = "columns_std"
-columns_key_mm = "columns_mm"
+delete_xcom_sql = "DELETE FROM xcom where dag_id='{}'"
 
 std_out_dir = "outputs/std"
 minmax_out_dir = "outputs/min_max"
