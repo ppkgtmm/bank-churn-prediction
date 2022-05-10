@@ -2,3 +2,8 @@ venv
 .idea
 __pycache__
 .ipynb_checkpoints
+
+# generated from split data script
+train.csv
+validation.csv
+test.csv
