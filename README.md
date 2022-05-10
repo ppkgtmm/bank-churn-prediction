@@ -9,7 +9,7 @@
 
 ### Exploration
 
-- Firstly, column type and values are validated using data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb) to know about what has been found
+- Firstly, column type and values are validated based on data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb) to know about what has been found
 
 ### Preprocessing
 
