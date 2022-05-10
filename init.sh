@@ -12,3 +12,5 @@ pip3 install "apache-airflow[celery]==${AIRFLOW_VERSION}" --constraint "${CONSTR
 
 export AIRFLOW_HOME=~/airflow
 airflow db init
+
+python3 ./split_data.py
