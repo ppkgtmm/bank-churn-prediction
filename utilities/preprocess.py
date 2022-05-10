@@ -1,7 +1,6 @@
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 import numpy as np
-import pandas as pd
 
 
 oh_config = dict(handle_unknown="ignore", sparse=False, dtype=np.int8)
