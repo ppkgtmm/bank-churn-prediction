@@ -4,17 +4,26 @@ import pandas as pd
 from typing import List
 import pickle
 from fastapi import FastAPI
-from constants import app_name, app_version, std_out_dir, model_out_path, classes
+from constants import (
+    app_name,
+    app_version,
+    output_dir,
+    std_dir,
+    preprocessor_fname,
+    model_fname,
+    classes,
+)
 from schemas import PredictionInput, Predictions
 from utilities import decode_label
 
 
 app = FastAPI()
+std_dir_path = join(output_dir, std_dir)
 
-with open(join(std_out_dir, "preprocessor.pkl"), "rb") as fp:
+with open(join(std_dir_path, preprocessor_fname), "rb") as fp:
     preprocessor = pickle.load(fp)
 
-with open(model_out_path, "rb") as fp:
+with open(join(output_dir, model_fname), "rb") as fp:
     model = pickle.load(fp)
 
 
