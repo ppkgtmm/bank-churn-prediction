@@ -12,8 +12,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 import pickle
 
-index_column = index_col.lower()
-
+# define constants
 f_names = [train_fname, val_fname, test_fname]
 keys = ["train", "validation", "test"]
 
@@ -28,11 +27,14 @@ default_args = dict(
     catchup=False,  # to not auto run dag
 )
 
+index_column = index_col.lower()
 
+# get value (return value of task) from xcom
 def get_xcom_values(task_ids):
     return get_current_context()["ti"].xcom_pull(task_ids=task_ids)
 
 
+# create temporary directory to store intermediate results
 def create_temp_dir():
     temp_dir_name = path.abspath(f"temp_{datetime.now().strftime('%Y%m%d%H%M%S')}")
     makedirs(temp_dir_name)
@@ -40,7 +42,7 @@ def create_temp_dir():
     return temp_dir_name
 
 
-# read data, drop redundant columns, save data to temp directory
+# read data, drop redundant columns, save data to temporary directory
 def read_data():
     path_dict = {}
     temp_dir_name = get_xcom_values(temp_dir_task_id)
@@ -72,11 +74,12 @@ def create_output_dir(prep_dir: str):
     makedirs(prep_dir_path, exist_ok=True)
 
 
+# create feature preprocessor (sklearn column transformer)
 def create_preprocessor(prep_dir: str, std=True):
     cat_features = get_xcom_values(select_features_task_id)
     temp_train_path = get_xcom_values(read_data_task_id)["train"]
     train = pd.read_csv(temp_train_path, **read_config)
-
+    # select numerical columns
     num_cols = (
         train.drop(columns=[target_col])
         .select_dtypes(exclude=["object"])
@@ -85,6 +88,7 @@ def create_preprocessor(prep_dir: str, std=True):
     preprocessor, col_names = get_feature_preprocessor(
         train, cat_features, num_cols, std
     )
+    # save feature preprocessor to specified directory
     prep_dir_path = path.join(output_dir, prep_dir)
     with open(path.join(prep_dir_path, preprocessor_fname), "wb") as out_file:
         pickle.dump(preprocessor, out_file)
@@ -92,12 +96,13 @@ def create_preprocessor(prep_dir: str, std=True):
     return col_names
 
 
+# preprocess features and target, save preprocessed data
 def preprocess(prep_dir: str, create_prep_task_id: str):
     index_cols = [index_column]
     prep_dir_path = path.join(output_dir, prep_dir)
     data_path = get_xcom_values(read_data_task_id)
     col_names = get_xcom_values(create_prep_task_id)
-
+    # load preprocessor
     with open(path.join(prep_dir_path, preprocessor_fname), "rb") as in_file:
         preprocessor = pickle.load(in_file)
 
@@ -106,7 +111,7 @@ def preprocess(prep_dir: str, create_prep_task_id: str):
     test = pd.read_csv(data_path["test"], **read_config)
     parts = [train, val, test]
     classes = get_classes(train, target_col)
-
+    # preprocess data and save
     for f_name, part in zip(f_names, parts):
         data_out = pd.DataFrame(part.index.values, columns=index_cols)
         data_out[target_col] = label_encode(part[target_col], classes).values
@@ -114,6 +119,7 @@ def preprocess(prep_dir: str, create_prep_task_id: str):
         data_out.to_csv(path.join(prep_dir_path, f_name), **save_config)
 
 
+# remove temporary directory
 def remove_temp_dir():
     temp_dir_name = get_xcom_values(temp_dir_task_id)
     shutil.rmtree(temp_dir_name)
