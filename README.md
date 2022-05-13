@@ -17,12 +17,12 @@
 
   <img width=900 src="https://user-images.githubusercontent.com/57994731/167464520-505f82c0-07e5-4c48-8656-bc8ceda6fa53.png" />
 
-- In the DAG diagram above, firstly the data is loaded to a temporary directory created before; then the data is split into train and test sets. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parrallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
+- In the DAG diagram above, firstly the data, which was already split during project set up, is loaded to a temporary directory created before. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
 
 ### Modeling and tuning
 
 - Preprocessed data are used for model training using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine. Algorithm and preprocessing method (more specifically numeric feature scaler) that best perform on validation set are chosen for furthur tuning.
-- The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization (recall = 0.9 on churn class) is selected for random search tuning
+- The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization (recall = 0.89 on churn class) is selected for random search tuning
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/57994731/163005625-5492800c-2d43-49b8-b0ad-6ae3e20ffe23.png" />
@@ -37,6 +37,7 @@
 [
   {
     "gender": "M",
+    "education_level": "Uneducated",
     "customer_age": 57,
     "dependent_count": 3,
     "months_on_book": 38,
@@ -116,7 +117,7 @@ airflow scheduler
 ```
 
 5. Navigate to airflow web UI at `http://localhost:8080/`, search for `preprocessing_dag` and click at the DAG name
-6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder of project directory)
+6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder in project directory)
 
 ### Inference
 
@@ -128,6 +129,7 @@ uvicorn app:app --reload
 - API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 
 ## References
+
 - [credit-card-customers-churn-dataset](https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers)
 - [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity)
 - [apache-airflow-quick-start](https://airflow.apache.org/docs/apache-airflow/stable/start/local.html)
