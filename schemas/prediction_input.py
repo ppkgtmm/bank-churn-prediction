@@ -7,8 +7,19 @@ class Gender(str, Enum):
     female = "F"
 
 
+class EducationLevel(str, Enum):
+    college = "College"
+    doctorate = "Doctorate"
+    graduate = "Graduate"
+    high_school = "High School"
+    post_graduate = "Post-Graduate"
+    uneducated = "Uneducated"
+    unknown = "Unknown"
+
+
 class PredictionInput(BaseModel):
     gender: Gender
+    education_level: EducationLevel
     customer_age: int = Field(ge=0)
     dependent_count: int = Field(ge=0)
     months_on_book: int = Field(ge=0)
