@@ -15,7 +15,7 @@
 
 - Apache Airflow was used to build data preprocessing pipeline (DAG) as illustrated in the image below
 
-  <img width=900 src="https://user-images.githubusercontent.com/57994731/167464520-505f82c0-07e5-4c48-8656-bc8ceda6fa53.png" />
+  <img width=900 src="https://user-images.githubusercontent.com/57994731/168348130-19bf7d40-0140-4b78-bd15-00be5e3a6675.png" />
 
 - In the DAG diagram above, firstly the data, which was already split during project set up, is loaded to a temporary directory created before. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
 
@@ -25,7 +25,7 @@
 - The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization (recall = 0.89 on churn class) is selected for random search tuning
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/57994731/163005625-5492800c-2d43-49b8-b0ad-6ae3e20ffe23.png" />
+<img src="https://user-images.githubusercontent.com/57994731/168349011-5be9af25-51c3-4565-b256-469b3938cd26.png" />
 </p>
 
 ### Inference
@@ -56,8 +56,8 @@
 ]
 ```
 
-![image](https://user-images.githubusercontent.com/57994731/163004429-378bb741-8cd6-4dfb-87b7-bc77796d8dc2.png)
-![image](https://user-images.githubusercontent.com/57994731/163004534-5885f183-27d1-4128-9816-b5f629c9d2ed.png)
+![image](https://user-images.githubusercontent.com/57994731/168351648-4669022d-1b5b-4a08-8600-9eee9c3c9f02.png)
+![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
 
 ## Run the project
 
