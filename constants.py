@@ -15,8 +15,8 @@ read_config = dict(index_col=index_col)
 
 temp_dir_task_id = "1.create_temp_dir"
 read_data_task_id = "2.read_data"
-select_features_task_id = "3.select_categorical_features"
-std_dir_task_id = "4.create_std_dir"
+std_dir_task_id = "3.create_std_dir"
+select_features_task_id = "4.select_categorical_features"
 minmax_dir_task_id = "5.create_minmax_dir"
 
 create_prep_std_task_id = "6.create_preprocessor_std"
