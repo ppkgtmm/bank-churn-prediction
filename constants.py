@@ -47,6 +47,6 @@ svm_algo = "Support Vector Machine"
 report_cmap = "YlGnBu"
 
 app_name = "Churn prediction with machine learning"
-app_version = "1.0.1"
+app_version = "1.0.2"
 model_fname = "model.pkl"
 classes = ["Not Churn", "Churn"]
