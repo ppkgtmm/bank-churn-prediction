@@ -2,13 +2,13 @@ import json
 from os.path import join
 import pandas as pd
 from typing import List
-import pickle
+import joblib
 from fastapi import FastAPI
 from constants import (
     app_name,
     app_version,
     output_dir,
-    std_dir,
+    best_prep_dir,
     preprocessor_fname,
     model_fname,
     classes,
@@ -18,13 +18,12 @@ from utilities import decode_label
 
 
 app = FastAPI()
-std_dir_path = join(output_dir, std_dir)
+best_prep_path = join(output_dir, best_prep_dir)
+prep_path = join(best_prep_path, preprocessor_fname)
+model_path = join(output_dir, model_fname)
 
-with open(join(std_dir_path, preprocessor_fname), "rb") as fp:
-    preprocessor = pickle.load(fp)
-
-with open(join(output_dir, model_fname), "rb") as fp:
-    model = pickle.load(fp)
+preprocessor = joblib.load(prep_path)
+model = joblib.load(model_path)
 
 
 @app.get("/info")
