@@ -10,7 +10,7 @@ from airflow import DAG
 from airflow.operators.python import get_current_context
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
-import pickle
+import joblib
 
 # define constants
 f_names = [train_fname, val_fname, test_fname]
@@ -23,7 +23,6 @@ default_args = dict(
     email_on_failure=False,
     email_on_retry=False,
     schedule_interval="@daily",
-    max_active_runs=1,  # no concurrent runs
     catchup=False,  # to not auto run dag
 )
 
@@ -32,6 +31,12 @@ index_column = index_col.lower()
 # get value (return value of task) from xcom
 def get_xcom_values(task_ids):
     return get_current_context()["ti"].xcom_pull(task_ids=task_ids)
+
+
+# get relative path to preprocessor
+def get_preprocessor_path(prep_dir: str):
+    prep_dir_path = path.join(output_dir, prep_dir)
+    return path.join(prep_dir_path, preprocessor_fname)
 
 
 # create temporary directory to store intermediate results
@@ -88,10 +93,8 @@ def create_preprocessor(prep_dir: str, std=True):
     preprocessor, col_names = get_feature_preprocessor(
         train, cat_features, num_cols, std
     )
-    # save feature preprocessor to specified directory
-    prep_dir_path = path.join(output_dir, prep_dir)
-    with open(path.join(prep_dir_path, preprocessor_fname), "wb") as out_file:
-        pickle.dump(preprocessor, out_file)
+    # save feature preprocessor to specified directory in outputs folder
+    joblib.dump(preprocessor, get_preprocessor_path(prep_dir))
 
     return col_names
 
@@ -103,8 +106,7 @@ def preprocess(prep_dir: str, create_prep_task_id: str):
     data_path = get_xcom_values(read_data_task_id)
     col_names = get_xcom_values(create_prep_task_id)
     # load preprocessor
-    with open(path.join(prep_dir_path, preprocessor_fname), "rb") as in_file:
-        preprocessor = pickle.load(in_file)
+    preprocessor = joblib.load(get_preprocessor_path(prep_dir))
 
     train = pd.read_csv(data_path["train"], **read_config)
     val = pd.read_csv(data_path["validation"], **read_config)
@@ -128,6 +130,7 @@ def remove_temp_dir():
 dag = DAG(
     "preprocessing_dag",
     default_args=default_args,
+    max_active_runs=1,  # no concurrent runs
 )
 
 create_temp_dir_task = PythonOperator(
