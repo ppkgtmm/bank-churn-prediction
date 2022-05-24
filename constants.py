@@ -47,7 +47,7 @@ svm_algo = "Support Vector Machine"
 report_cmap = "YlGnBu"
 
 app_name = "Churn prediction with machine learning"
-app_version = "1.0.2"
+app_version = "1.0.3"
 best_prep_dir = std_dir
 model_fname = "model.joblib"
 classes = ["Not Churn", "Churn"]
