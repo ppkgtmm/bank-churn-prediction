@@ -61,7 +61,7 @@ with col5:
         # result = 'churn'.lower()
         response = requests.post(
             'http://localhost:8000/predict', 
-            data=dict(
+            json=[dict(
                 gender=gender,
                 education_level=education,
                 customer_age=age,
@@ -77,21 +77,21 @@ with col5:
                 total_trans_ct=total_trans_ct,
                 total_ct_chng_q4_q1=total_ct_chng_q4_q1,
                 avg_utilization_ratio=avg_utilization_ratio,
-            )
+            )],
+            headers={'Content-Type': 'application/json'}
         ).json()
-        print(response)
-        # result = ''
-        # st.markdown('''
-        #     <style>
-        #         .stMarkdown {
-        #             text-align: center;
-        #             color: ''' + color_map[result] + ''';
-        #         }
-        #         p {
-        #             font-size: 22px;
-        #             margin-botton: 0px;
-        #             font-weight: bold;
-        #         }
-        #     </style>
-        # ''', unsafe_allow_html=True)
-        # st.write(result.upper())
+        result = str(response[0]['prediction']).lower()
+        st.markdown('''
+            <style>
+                .stMarkdown {
+                    text-align: center;
+                    color: ''' + color_map[result] + ''';
+                }
+                p {
+                    font-size: 22px;
+                    margin-botton: 0px;
+                    font-weight: bold;
+                }
+            </style>
+        ''', unsafe_allow_html=True)
+        st.write(result.upper())
