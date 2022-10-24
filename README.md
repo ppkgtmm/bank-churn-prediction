@@ -59,6 +59,10 @@
 ![image](https://user-images.githubusercontent.com/57994731/168351648-4669022d-1b5b-4a08-8600-9eee9c3c9f02.png)
 ![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
 
+- Front end was added as of 24 Oct 2022
+
+![image](https://user-images.githubusercontent.com/57994731/197541098-fa217842-4770-4666-b39e-4efbfe54a658.png)
+
 ## Run the project
 
 - Make sure you are in project directory inside your shell (bash prefered)
