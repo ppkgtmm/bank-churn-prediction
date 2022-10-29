@@ -63,6 +63,7 @@
 <p align="center">
 <img width="600" src="https://user-images.githubusercontent.com/57994731/197541692-c645c1d0-e93b-4058-a8da-e2ba56be7692.png">
 </p>
+
 ## Run the project
 
 - Make sure you are in project directory inside your shell (bash prefered)
