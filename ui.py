@@ -12,7 +12,7 @@ st.markdown(
             max-width: 46rem;
         }
         .block-container {
-            padding-top: 2.5rem;
+            padding-top: 1rem;
             padding-bottom: 0rem;
             max-width: 85vw;
             display: flex;
