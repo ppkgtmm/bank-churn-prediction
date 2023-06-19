@@ -60,8 +60,7 @@
 ![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
 
 - Front end added as of 19 Jun 2023
-
-![image](https://github.com/ppkgtmm/churn-prediction/assets/57994731/c5b61a92-4ea5-4b1a-ad87-9eb377477857)
+![image](https://github.com/ppkgtmm/churn-prediction/assets/57994731/dfd0cfc4-33a1-41ec-be0c-73bbdd019ce3)
 
 ## Run the project
 
