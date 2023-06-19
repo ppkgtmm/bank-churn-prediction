@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 import pandas as pd
 
-color_map = {"Churn": "#ef5c5c", "Not Churn": "#86efac"}
+color_map = {"Churn": "#f54343", "Not Churn": ""}
 
 
 st.markdown(
@@ -70,9 +70,7 @@ if input_file:
     with st.container():
         st.dataframe(
             df.style.apply(
-                lambda x: x.map(color_map).map(
-                    "background-color: {}; color: black;".format
-                ),
+                lambda x: x.map(color_map).map("background-color: {};".format),
                 axis=1,
                 subset="prediction",
             ),
