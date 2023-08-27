@@ -2,13 +2,11 @@
 
 Repo created to store source code of churn prediction end-to-end machine learning project which involves work from data exploration, data preprocessing, model training, parameter tuning to model inference
 
-## Process
+## Exploration
 
-### Exploration
+- Firstly, column type and values are validated based on data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/exploration.ipynb) to know about what has been found
 
-- Firstly, column type and values are validated based on data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb) to know about what has been found
-
-### Preprocessing
+## Preprocessing
 
 - Apache Airflow was used to build data preprocessing pipeline (DAG) as illustrated in the image below
 
@@ -16,7 +14,7 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 
 - In the DAG diagram above, firstly the data, which was already split during project set up, is loaded to a temporary directory created before. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
 
-### Modeling and tuning
+## Modeling and tuning
 
 - Preprocessed data are used for model training using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine. Algorithm and preprocessing method (more specifically numeric feature scaler) that best perform on validation set are chosen for furthur tuning.
 - The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization (recall = 0.89 on churn class) is selected for random search tuning
@@ -25,7 +23,7 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 <img src="https://user-images.githubusercontent.com/57994731/168349011-5be9af25-51c3-4565-b256-469b3938cd26.png" />
 </p>
 
-### Inference
+## Inference
 
 - An API is developed to serve predictions from model based on input data provided to `/predict` endpoint
 - Sample input from data originally labeled as existing customer but some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb)). Consequently, the customer is categorized as churning
@@ -57,15 +55,13 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 ![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
 
 - Front end added as of 19 Jun 2023
-![image](https://github.com/ppkgtmm/churn-prediction/assets/57994731/dfd0cfc4-33a1-41ec-be0c-73bbdd019ce3)
+![image](https://user-images.githubusercontent.com/57994731/246894228-dfd0cfc4-33a1-41ec-be0c-73bbdd019ce3.png)
 
-## Run the project
+## Usage
 
 - Make sure you are in project directory inside your shell (bash prefered)
 
 ### Initialization
-
-#### Part 1
 
 - Only required for the first time running this project
 
@@ -80,8 +76,6 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 ```sh
 pip3 install notebook
 ```
-
-#### Part 2
 
 - Required for every time you are running part of this project in a new shell
 
