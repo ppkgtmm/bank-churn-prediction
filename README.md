@@ -1,4 +1,4 @@
-# Churn prediction
+# churn prediction
 
 Repo created to store source code of churn prediction end-to-end machine learning project which involves work from data exploration, data preprocessing, model training, parameter tuning to model inference
 
