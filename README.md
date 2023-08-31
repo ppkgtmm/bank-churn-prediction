@@ -24,9 +24,7 @@ Preprocessed data are used for training models using Decision Tree, Random Fores
 
 ## Inference
 
-An API is developed to serve predictions from model based on input data provided to `/predict` endpoint
-
-Sample input from data originally labeled as existing customer but some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb)). Consequently, the customer is categorized as churning
+An API is developed to serve predictions from model based on input data provided to `/predict` endpoint. Sample input used here was originally labeled as existing customer; however, some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb) for more information). The tuned model categorized the customer as churning
 
 ```json
 [
@@ -54,16 +52,16 @@ Sample input from data originally labeled as existing customer but some of the c
 ![image](https://user-images.githubusercontent.com/57994731/168351648-4669022d-1b5b-4a08-8600-9eee9c3c9f02.png)
 ![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
 
-Front end was added as of 19 Jun 2023
+Front end which provides predictions for supplied input data file was also implemented
 ![image](https://user-images.githubusercontent.com/57994731/246894228-dfd0cfc4-33a1-41ec-be0c-73bbdd019ce3.png)
 
 ## Usage
 
 Make sure you are in project directory inside your shell (bash prefered)
 
-### Initialization
+#### Initialization
 
-Only required for the first time running this project
+Part 1 : Only required for the first time running this project
 
 1. Run init script
 
@@ -77,13 +75,13 @@ Only required for the first time running this project
 pip3 install notebook
 ```
 
-Required for every time you are running part of this project in a new shell
+Part 2 : Required for every time you are running part of this project in a new shell
 
 ```sh
 . ./setup.sh
 ```
 
-### Exploration or Modeling
+#### Exploration or Modeling
 
 1. Start jupyter notebook server
 
@@ -94,7 +92,7 @@ jupyter notebook
 2. Navigate to project folder in the browser tab automatically opened by jupyter
 3. Open notebook file and run cells (control + Enter) starting from the top
 
-### Preprocessing
+#### Preprocessing
 
 1. Open 2 terminal windows / tabs
 2. In the both terminals, run **Part 2** of **Initialization** step
@@ -113,7 +111,7 @@ airflow scheduler
 5. Navigate to airflow web UI at `http://localhost:8080/`, search for `preprocessing_dag` and click at the DAG name
 6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder in project directory)
 
-### Inference
+#### Inference
 
 ```sh
 uvicorn app:app --reload
