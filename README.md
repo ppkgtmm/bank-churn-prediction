@@ -4,20 +4,21 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 
 ## Exploration
 
-- Firstly, column type and values are validated based on data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/exploration.ipynb) to know about what has been found
+Firstly, column type and values are validated based on data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/exploration.ipynb) to know about what has been found
 
 ## Preprocessing
 
-- Apache Airflow was used to build data preprocessing pipeline (DAG) as illustrated in the image below
+Apache Airflow was used to build data preprocessing pipeline (DAG) as illustrated in the image below
 
-  <img width=900 src="https://user-images.githubusercontent.com/57994731/168348130-19bf7d40-0140-4b78-bd15-00be5e3a6675.png" />
+<img width=900 src="https://user-images.githubusercontent.com/57994731/168348130-19bf7d40-0140-4b78-bd15-00be5e3a6675.png" />
 
-- In the DAG diagram above, firstly the data, which was already split during project set up, is loaded to a temporary directory created before. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
+In the DAG diagram above, firstly the data, which was already split during project set up, is loaded to a temporary directory created before. Categorical features to be used are selected based on train set and meanwhile output directories to store results from preprocessing are created. After that in parallel, preprocessors are created, data are preprocessed and both data and preprocessors are saved to corresponding output directories for reuse. Lastly, a couple of tasks are executed for freeing up the disk space.
 
 ## Modeling and tuning
 
-- Preprocessed data are used for model training using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine. Algorithm and preprocessing method (more specifically numeric feature scaler) that best perform on validation set are chosen for furthur tuning.
-- The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization (recall = 0.89 on churn class) is selected for random search tuning
+Preprocessed data are used for model training using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine. Algorithm and preprocessing method (more specifically numeric feature scaler) that best perform on validation set are chosen for furthur tuning.
+
+The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization (recall = 0.89 on churn class) is selected for random search tuning
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/57994731/168349011-5be9af25-51c3-4565-b256-469b3938cd26.png" />
@@ -25,8 +26,9 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 
 ## Inference
 
-- An API is developed to serve predictions from model based on input data provided to `/predict` endpoint
-- Sample input from data originally labeled as existing customer but some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb)). Consequently, the customer is categorized as churning
+An API is developed to serve predictions from model based on input data provided to `/predict` endpoint
+
+Sample input from data originally labeled as existing customer but some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb)). Consequently, the customer is categorized as churning
 
 ```json
 [
@@ -54,16 +56,16 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 ![image](https://user-images.githubusercontent.com/57994731/168351648-4669022d-1b5b-4a08-8600-9eee9c3c9f02.png)
 ![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
 
-- Front end added as of 19 Jun 2023
+Front end was added as of 19 Jun 2023
 ![image](https://user-images.githubusercontent.com/57994731/246894228-dfd0cfc4-33a1-41ec-be0c-73bbdd019ce3.png)
 
 ## Usage
 
-- Make sure you are in project directory inside your shell (bash prefered)
+Make sure you are in project directory inside your shell (bash prefered)
 
 ### Initialization
 
-- Only required for the first time running this project
+Only required for the first time running this project
 
 1. Run init script
 
@@ -77,7 +79,7 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 pip3 install notebook
 ```
 
-- Required for every time you are running part of this project in a new shell
+Required for every time you are running part of this project in a new shell
 
 ```sh
 . ./setup.sh
