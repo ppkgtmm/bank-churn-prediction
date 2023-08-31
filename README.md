@@ -12,7 +12,7 @@ Apache Airflow was used to build data processing pipeline (DAG) as illustrated i
 
 <img width=900 src="https://user-images.githubusercontent.com/57994731/168348130-19bf7d40-0140-4b78-bd15-00be5e3a6675.png" />
 
-Initially, input data which has already been split during project set up was loaded. Then, categorical features to be used by model were selected based on training data. Afterwards in parallel, each type of preprocessors to be validated were created and used to process the input datasets. Both preprocessors and processed data were then saved to subdirectories inside output folder for reuse. Lastly, a couple of tasks were executed for freeing up the disk space
+Initially, input data which has already been split during project set up was loaded. Then, categorical features to be used by model were selected using chi-square test of independence on training data at cutoff p-value of 0.05. Afterwards in parallel, each type of preprocessors to be validated were created and used to process the input datasets. Both preprocessors and processed data were then saved to subdirectories inside output folder for reuse. Lastly, a couple of tasks were executed for freeing up the disk space
 
 ## Modeling and tuning
 
