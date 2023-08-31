@@ -61,7 +61,7 @@ Make sure you are in project directory inside your shell (bash prefered)
 
 #### Set up
 
-Part 1 : Only required for the first time running this project
+**Part 1** : Only required for the first time running this project
 
 1. Run init script
 
@@ -75,7 +75,7 @@ Part 1 : Only required for the first time running this project
 pip3 install notebook
 ```
 
-Part 2 : Required for every time you are running part of this project in a new shell
+**Part 2** : Required for every time you are running part of this project in a new shell
 
 ```sh
 . ./setup.sh
