@@ -4,11 +4,11 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 
 ## Exploration
 
-Firstly, column type and values are validated based on data description then there are target distribution analysis, numerical and categorical feature distribution analysis where features values are separated by target class. Lastly, there is correlation analysis to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/exploration.ipynb) to know about what has been found
+Firstly, column type and values are validated againts data description then target distribution was analysed. Subsequently, numerical and categorical feature distribution analysis by target class was done. Lastly, correlation was used to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/exploration.ipynb) to know more about the observations
 
 ## Preprocessing
 
-Apache Airflow was used to build data preprocessing pipeline (DAG) as illustrated in the image below
+Apache Airflow was used to build data processing pipeline (DAG) as illustrated in the image below
 
 <img width=900 src="https://user-images.githubusercontent.com/57994731/168348130-19bf7d40-0140-4b78-bd15-00be5e3a6675.png" />
 
