@@ -102,7 +102,7 @@ jupyter notebook
 airflow scheduler
 ```
 
-4. In the second terminal, run following to add sqlite database connection to airflow (required only for the first time)
+4. In the second terminal, run following to add sqlite database connection to airflow (required only once)
    
 ```sh
 airflow connections add "x_com_sqlite" --conn-uri "sqlite://${AIRFLOW_HOME}/airflow.db"
