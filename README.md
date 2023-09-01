@@ -140,3 +140,4 @@ uvicorn app:app --reload
 - [fast-api-framework-tutorial](https://fastapi.tiangolo.com/)
 - [pandas-dataframe-to-json](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html)
 - [dynamically-create-an-enum-with-custom-values-in-python](https://stackoverflow.com/questions/33690064/dynamically-create-an-enum-with-custom-values-in-python)
+- [howto-manage-airflow-connections](https://airflow.apache.org/docs/apache-airflow/2.2.4/howto/connection.html)
