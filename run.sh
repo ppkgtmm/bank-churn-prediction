@@ -19,7 +19,7 @@ prepenv() {
 }
 
 init() {
-    python3.9  -m venv venv
+    python3.9 -m venv venv
     prepenv
     pip3 install -r requirements.txt
 
