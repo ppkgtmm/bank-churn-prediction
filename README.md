@@ -105,14 +105,14 @@ chmod +x ./run.sh
 
 #### Serve model
 
-1. Start model API server
+1. Run command below to start model API server
 
 ```sh
 ./run.sh api
 ```
 
-- Running command above will start API server at `http://localhost:8000`
-- API explorer (Swagger UI) is available at `http://localhost:8000/docs`
+API explorer (Swagger UI) is available at `http://localhost:8000/docs`
+ 
 
 ## References
 
