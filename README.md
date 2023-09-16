@@ -50,8 +50,8 @@ An API is developed to serve predictions from model based on input data provided
 ]
 ```
 
-![image](https://user-images.githubusercontent.com/57994731/168351648-4669022d-1b5b-4a08-8600-9eee9c3c9f02.png)
-![image](https://user-images.githubusercontent.com/57994731/168353360-47e23644-3c5f-4d08-9a2d-3c9101ac8694.png)
+![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/api-input.png?raw=true)
+![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/api-output.png?raw=true)
 
 Front end which provides predictions for supplied input data file was also implemented
 ![image](https://user-images.githubusercontent.com/57994731/246894228-dfd0cfc4-33a1-41ec-be0c-73bbdd019ce3.png)
