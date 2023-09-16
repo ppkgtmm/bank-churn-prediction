@@ -113,6 +113,11 @@ chmod +x ./run.sh
 
 API explorer (Swagger UI) is available at `http://localhost:8000/docs`
  
+2. Launch frontend for interaction with model
+
+```sh
+./run.sh ui
+```
 
 ## References
 
