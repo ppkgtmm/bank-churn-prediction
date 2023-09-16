@@ -28,12 +28,12 @@ init() {
     CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
 
     pip3 install "apache-airflow[celery]==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
-
+    pip3 install notebook
+    
     airflow db init
+    airflow users create --username ${AIRFLOW_ADMIN_USERNAME} --password ${AIRFLOW_ADMIN_PASSWORD} --firstname First --lastname Last --role Admin --email admin@example.com
 
     python3 data/scripts/split_data.py
-
-    pip3 install notebook
 }
 
 setup() {
