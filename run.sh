@@ -6,7 +6,7 @@ CLEAR="\033[0m"
 
 usage() {  
     echo "usage: ./run.sh command"  
-    echo "where command is one of init, notebook, scheduler, airflow, api"
+    echo "where command is one of init, notebook, scheduler, airflow, api, ui"
 } 
 
 prepenv() {
@@ -62,21 +62,29 @@ api() {
     uvicorn app.api:app --reload
 }
 
+frontend() {
+    setup
+    streamlit run app/frontend.py
+}
+
 if [ "$1" == "init" ]
-then 
+then
     init
 elif [ "$1" == "notebook" ]
-then 
+then
     notebook
 elif [ "$1" == "scheduler" ]
-then 
+then
     scheduler
 elif [ "$1" == "airflow" ]
-then 
+then
     webserver
 elif [ "$1" == "api" ]
-then 
+then
     api
+elif [ "$1" == "ui" ]
+then
+    frontend
 else
     usage
     echo "${RED}error : invalid argument${CLEAR}"
