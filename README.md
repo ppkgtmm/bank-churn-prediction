@@ -84,7 +84,7 @@ chmod +x ./run.sh
 2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
 3. Open notebook file and run cells (control + Enter) starting from the top
 
-#### Preprocess data
+#### Data preprocessing
 
 1. Open 2 terminal windows / tabs
 2. In the first terminal, run below to start airflow scheduler
@@ -103,7 +103,7 @@ chmod +x ./run.sh
 5. Search for `preprocessing_dag` and click at the DAG name
 6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder in project directory)
 
-#### Serve model
+#### Model inference
 
 1. Run command below to start model API server
 
