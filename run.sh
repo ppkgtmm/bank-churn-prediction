@@ -45,12 +45,29 @@ notebook() {
     jupyter notebook
 }
 
+scheduler() {
+    setup
+    airflow scheduler
+}
+
+airflow() {
+    setup
+    airflow connections add "x_com_sqlite" --conn-uri "sqlite://${AIRFLOW_HOME}/airflow.db"
+    airflow webserver -p 8080
+}
+
 if [ "$1" == "init" ]
 then 
     init
 elif [ "$1" == "notebook" ]
 then 
     notebook
+elif [ "$1" == "scheduler" ]
+then 
+    scheduler
+elif [ "$1" == "airflow" ]
+then 
+    airflow
 else
     usage
     echo "${RED}error : invalid argument${CLEAR}"
