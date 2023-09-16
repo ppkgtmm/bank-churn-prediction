@@ -22,7 +22,7 @@ default_args = dict(
     depends_on_past=False,
     email_on_failure=False,
     email_on_retry=False,
-    schedule_interval="@daily",
+    schedule_interval=None,
     catchup=False,  # to not auto run dag
 )
 
