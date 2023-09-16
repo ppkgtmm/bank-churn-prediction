@@ -29,6 +29,7 @@ An API is developed to serve predictions from model based on input data provided
 ```json
 [
   {
+    "clientnum": "",
     "gender": "M",
     "education_level": "Uneducated",
     "customer_age": 57,
