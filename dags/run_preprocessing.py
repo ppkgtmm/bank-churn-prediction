@@ -16,11 +16,7 @@ import joblib
 f_names = [train_fname, val_fname, test_fname]
 keys = ["train", "validation", "test"]
 
-default_args = dict(
-    owner="airflow",
-    start_date=datetime(2022, 1, 1),
-    schedule_interval="None"
-)
+default_args = dict(owner="airflow")
 
 index_column = index_col.lower()
 
@@ -126,6 +122,8 @@ def remove_temp_dir():
 dag = DAG(
     "preprocessing_dag",
     default_args=default_args,
+    start_date=datetime(2022, 1, 1),
+    schedule_interval="None",
     max_active_runs=1,  # no concurrent runs
     catchup=False,  # to not auto run dag
 )
