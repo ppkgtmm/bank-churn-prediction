@@ -61,8 +61,16 @@ Make sure you are in project directory inside your shell
 
 #### Initialization
 
+1. Run the following to grant execute permission to helper script
+   
 ```sh
-chmod +x ./run.sh && ./run.sh init
+chmod +x ./run.sh
+```
+
+2. Run helper script to initialize project
+   
+```sh
+./run.sh init
 ```
 
 #### Explore data or Train model
