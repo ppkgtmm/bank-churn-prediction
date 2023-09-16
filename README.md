@@ -105,8 +105,10 @@ chmod +x ./run.sh
 
 #### Serve model
 
+1. Start model API server
+
 ```sh
-uvicorn app:app --reload
+./run.sh api
 ```
 
 - Running command above will start API server at `http://localhost:8000`
