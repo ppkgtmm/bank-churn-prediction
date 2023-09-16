@@ -4,10 +4,10 @@ GREEN="\033[0;32m"
 RED="\033[0;31m"
 CLEAR="\033[0m"
 
-usage() {  
-    echo "usage: ./run.sh command"  
+usage() {
+    echo "usage: ./run.sh command"
     echo "where command is one of init, notebook, scheduler, airflow, api, ui"
-} 
+}
 
 prepenv() {
     source venv/bin/activate
@@ -29,7 +29,7 @@ init() {
 
     pip3 install "apache-airflow[celery]==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
     pip3 install notebook
-    
+
     airflow db init
     airflow users create --username ${AIRFLOW_ADMIN_USERNAME} --password ${AIRFLOW_ADMIN_PASSWORD} --firstname First --lastname Last --role Admin --email admin@example.com
 
