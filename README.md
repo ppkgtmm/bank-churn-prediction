@@ -58,7 +58,7 @@ Front end which provides predictions for supplied input data file was also imple
 
 ## Usage
 
-Make sure you are in project directory inside your shell
+Make sure to be inside project directory in your terminal
 
 #### Initialization
 
