@@ -100,7 +100,7 @@ chmod +x ./run.sh
 ```
 
 4. Navigate to airflow web UI at `http://localhost:8080/`, input `admin` for both text boxes
-5. Search for `preprocessing_dag` and click at the DAG name
+5. Search for `preprocessing_dag` (dag might take a while to appear) and click at the DAG name
 6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder in project directory)
 
 #### Model inference
