@@ -62,13 +62,13 @@ Make sure you are in project directory inside your shell
 #### Initialization
 
 1. Run the following to grant execute permission to helper script
-   
+
 ```sh
 chmod +x ./run.sh
 ```
 
 2. Run helper script to initialize project
-   
+
 ```sh
 ./run.sh init
 ```
@@ -112,7 +112,7 @@ chmod +x ./run.sh
 ```
 
 API explorer (Swagger UI) is available at `http://localhost:8000/docs`
- 
+
 2. Launch frontend for interaction with model
 
 ```sh
