@@ -14,7 +14,7 @@ from constants import (
     model_fname,
     classes,
 )
-from schemas import PredictionInput, Predictions
+from app.schemas import PredictionInput, Predictions
 from utilities import decode_label
 
 

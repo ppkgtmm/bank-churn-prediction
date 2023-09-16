@@ -29,6 +29,7 @@ An API is developed to serve predictions from model based on input data provided
 ```json
 [
   {
+    "clientnum": "",
     "gender": "M",
     "education_level": "Uneducated",
     "customer_age": 57,
@@ -57,74 +58,67 @@ Front end which provides predictions for supplied input data file was also imple
 
 ## Usage
 
-Make sure you are in project directory inside your shell (bash prefered)
+Make sure you are in project directory inside your shell
 
-#### Set up
+#### Initialization
 
-**Part 1** : Only required for the first time running this project
-
-1. Run init script
+1. Run the following to grant execute permission to helper script
 
 ```sh
-. ./init.sh
+chmod +x ./run.sh
 ```
 
-2. Install jupyter notebook (useful for exploration and modeling part)
+2. Run helper script to initialize project
 
 ```sh
-pip3 install notebook
+./run.sh init
 ```
 
-**Part 2** : Required for every time you are running part of this project in a new shell
+#### Exploration and Modeling
 
-```sh
-. ./setup.sh
-```
-
-#### Explore data or Train model
-
-1. Start jupyter notebook server
+1. Run command below to start jupyter notebook server
 
 ```
-jupyter notebook
+./run.sh notebook
 ```
 
-2. Navigate to project folder in the browser tab automatically opened by jupyter
+2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
 3. Open notebook file and run cells (control + Enter) starting from the top
 
-#### Preprocess data
+#### Data preprocessing
 
 1. Open 2 terminal windows / tabs
-2. In the both terminals, run **Part 2** of **Set up** step
-3. In the first terminal, run below to start airflow scheduler
+2. In the first terminal, run below to start airflow scheduler
 
 ```sh
-airflow scheduler
+./run.sh scheduler
 ```
 
-4. In the second terminal, run following to add sqlite database connection to airflow (required only once)
-   
-```sh
-airflow connections add "x_com_sqlite" --conn-uri "sqlite://${AIRFLOW_HOME}/airflow.db"
-```
-
-5. After step 4 has succeeded, run below to start airflow web server
+3. In the second terminal, run following to to start airflow web server
 
 ```sh
-airflow webserver -p 8080
+./run.sh airflow
 ```
 
-6. Navigate to airflow web UI at `http://localhost:8080/`, search for `preprocessing_dag` and click at the DAG name
-7. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder in project directory)
+4. Navigate to airflow web UI at `http://localhost:8080/`, input `admin` for both text boxes
+5. Search for `preprocessing_dag` (dag might take a while to appear) and click at the DAG name
+6. Click play button on the right of the screen to run the DAG (preprocessing results are saved to outputs folder in project directory)
 
-#### Serve model
+#### Model inference
+
+1. Run command below to start model API server
 
 ```sh
-uvicorn app:app --reload
+./run.sh api
 ```
 
-- Running command above will start API server at `http://localhost:8000`
-- API explorer (Swagger UI) is available at `http://localhost:8000/docs`
+API explorer (Swagger UI) is available at `http://localhost:8000/docs`
+
+2. Launch frontend for interaction with model
+
+```sh
+./run.sh ui
+```
 
 ## References
 
