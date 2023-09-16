@@ -10,3 +10,4 @@ test.csv
 
 # airflow home
 airflow
+.DS_Store
