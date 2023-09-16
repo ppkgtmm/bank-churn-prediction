@@ -22,8 +22,7 @@ default_args = dict(
     depends_on_past=False,
     email_on_failure=False,
     email_on_retry=False,
-    schedule_interval=None,
-    catchup=False,  # to not auto run dag
+    schedule_interval=None
 )
 
 index_column = index_col.lower()
@@ -131,6 +130,7 @@ dag = DAG(
     "preprocessing_dag",
     default_args=default_args,
     max_active_runs=1,  # no concurrent runs
+    catchup=False,  # to not auto run dag
 )
 
 create_temp_dir_task = PythonOperator(
