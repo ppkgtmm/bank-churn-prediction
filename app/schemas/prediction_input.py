@@ -18,7 +18,6 @@ class EducationLevel(str, Enum):
 
 
 class PredictionInput(BaseModel):
-    clientnum: str
     gender: Gender
     education_level: EducationLevel
     customer_age: int = Field(ge=0)
