@@ -19,10 +19,7 @@ keys = ["train", "validation", "test"]
 default_args = dict(
     owner="airflow",
     start_date=datetime(2022, 1, 1),
-    depends_on_past=False,
-    email_on_failure=False,
-    email_on_retry=False,
-    schedule_interval=None
+    schedule_interval="None"
 )
 
 index_column = index_col.lower()
