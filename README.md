@@ -81,7 +81,7 @@ chmod +x ./run.sh
 ./run.sh notebook
 ```
 
-2. Navigate to notebooks folder in the browser tab automatically opened by jupyter
+2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
 3. Open notebook file and run cells (control + Enter) starting from the top
 
 #### Preprocess data
