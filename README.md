@@ -10,7 +10,7 @@ Firstly, column type and values are validated againts data description then targ
 
 Apache Airflow was used to build data processing pipeline (DAG) as illustrated in the image below
 
-<img width=900 src="https://user-images.githubusercontent.com/57994731/168348130-19bf7d40-0140-4b78-bd15-00be5e3a6675.png" />
+<img src="https://github.com/ppkgtmm/churn-prediction/blob/main/images/dag-diagram.png?raw=true" />
 
 Initially, input data which has already been split during project set up was loaded. Then, categorical features to be used by model were selected using chi-square test of independence on training data at cutoff p-value of 0.05. Afterwards in parallel, each type of preprocessors to be validated were created and used to process the input datasets. Both preprocessors and processed data were then saved to subdirectories inside output folder for reuse. Lastly, a couple of tasks were executed for freeing up the disk space
 
@@ -19,7 +19,7 @@ Initially, input data which has already been split during project set up was loa
 Preprocessed data are used for training models using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine algorithms. The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization preprocessing method (recall = 0.89 on churn class) was selected for random search tuning
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/57994731/168349011-5be9af25-51c3-4565-b256-469b3938cd26.png" />
+<img width="600" src="https://github.com/ppkgtmm/churn-prediction/blob/main/images/evaluation-result.png?raw=true" />
 </p>
 
 ## Inference
