@@ -79,23 +79,16 @@ chmod +x ./run.sh && ./run.sh init
 #### Preprocess data
 
 1. Open 2 terminal windows / tabs
-2. In the both terminals, run **Part 2** of **Set up** step
-3. In the first terminal, run below to start airflow scheduler
+2. In the first terminal, run below to start airflow scheduler
 
 ```sh
-airflow scheduler
+./run.sh scheduler
 ```
 
-4. In the second terminal, run following to add sqlite database connection to airflow (required only once)
-   
-```sh
-airflow connections add "x_com_sqlite" --conn-uri "sqlite://${AIRFLOW_HOME}/airflow.db"
-```
-
-5. After step 4 has succeeded, run below to start airflow web server
+3. In the second terminal, run following to to start airflow web server
 
 ```sh
-airflow webserver -p 8080
+./run.sh airflow
 ```
 
 6. Navigate to airflow web UI at `http://localhost:8080/`, search for `preprocessing_dag` and click at the DAG name
