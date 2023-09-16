@@ -67,10 +67,10 @@ chmod +x ./run.sh && ./run.sh init
 
 #### Explore data or Train model
 
-1. Start jupyter notebook server
+1. Run command below to start jupyter notebook server
 
 ```
-jupyter notebook
+./run.sh notebook
 ```
 
 2. Navigate to project folder (if required) in the browser tab automatically opened by jupyter
