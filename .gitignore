@@ -7,3 +7,6 @@ __pycache__
 train.csv
 validation.csv
 test.csv
+
+# airflow home
+airflow
