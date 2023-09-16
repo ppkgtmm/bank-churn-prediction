@@ -73,7 +73,7 @@ chmod +x ./run.sh
 ./run.sh init
 ```
 
-#### Explore data or Train model
+#### Exploration and Modeling
 
 1. Run command below to start jupyter notebook server
 
