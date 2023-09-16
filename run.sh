@@ -6,7 +6,7 @@ CLEAR="\033[0m"
 
 usage() {  
     echo "usage: ./run.sh command"  
-    echo "where command is one of init, notebook, scheduler, airflow"
+    echo "where command is one of init, notebook, scheduler, airflow, api"
 } 
 
 prepenv() {
@@ -57,6 +57,11 @@ webserver() {
     airflow webserver -p 8080
 }
 
+api() {
+    setup
+    uvicorn app.api:app --reload
+}
+
 if [ "$1" == "init" ]
 then 
     init
@@ -69,6 +74,9 @@ then
 elif [ "$1" == "airflow" ]
 then 
     webserver
+elif [ "$1" == "api" ]
+then 
+    api
 else
     usage
     echo "${RED}error : invalid argument${CLEAR}"
