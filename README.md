@@ -57,28 +57,12 @@ Front end which provides predictions for supplied input data file was also imple
 
 ## Usage
 
-Make sure you are in project directory inside your shell (bash prefered)
+Make sure you are in project directory inside your shell
 
-#### Set up
-
-**Part 1** : Only required for the first time running this project
-
-1. Run init script
+#### Initialization
 
 ```sh
-. ./init.sh
-```
-
-2. Install jupyter notebook (useful for exploration and modeling part)
-
-```sh
-pip3 install notebook
-```
-
-**Part 2** : Required for every time you are running part of this project in a new shell
-
-```sh
-. ./setup.sh
+chmod +x ./run.sh && ./run.sh init
 ```
 
 #### Explore data or Train model
