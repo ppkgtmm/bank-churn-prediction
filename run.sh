@@ -6,16 +6,21 @@ CLEAR="\033[0m"
 
 usage() {  
     echo "usage: ./run.sh command"  
-    echo "where command is one of init, notebook"
+    echo "where command is one of init, notebook, scheduler, airflow"
 } 
 
-activate() {
+prepenv() {
     source venv/bin/activate
+    export AIRFLOW_HOME=${PWD}/airflow
+    export AIRFLOW_ADMIN_USERNAME=admin
+    export AIRFLOW_ADMIN_PASSWORD=admin
+    export AIRFLOW__CORE__DAGS_FOLDER="${PWD}/dags"
+    export PYTHONPATH=${PWD}
 }
 
 init() {
     python3 -m venv venv
-    activate
+    prepenv
     pip3 install -r requirements.txt
 
     AIRFLOW_VERSION=2.7.0
@@ -24,20 +29,16 @@ init() {
 
     pip3 install "apache-airflow[celery]==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
 
-    export AIRFLOW_HOME=${PWD}/airflow
     airflow db init
 
-    PYTHONPATH=${PWD} python3 data/scripts/split_data.py
+    python3 data/scripts/split_data.py
 
     pip3 install notebook
 }
 
 setup() {
-    activate
-    mkdir -p ${PWD}/dags/
-    export AIRFLOW_HOME=${PWD}/airflow
-    export AIRFLOW__CORE__DAGS_FOLDER="${PWD}/dags"
-    export PYTHONPATH=${PWD}
+    prepenv
+    mkdir -p ${AIRFLOW__CORE__DAGS_FOLDER}
 }
 
 notebook() {
@@ -50,7 +51,7 @@ scheduler() {
     airflow scheduler
 }
 
-airflow() {
+webserver() {
     setup
     airflow connections add "x_com_sqlite" --conn-uri "sqlite://${AIRFLOW_HOME}/airflow.db"
     airflow webserver -p 8080
@@ -67,7 +68,7 @@ then
     scheduler
 elif [ "$1" == "airflow" ]
 then 
-    airflow
+    webserver
 else
     usage
     echo "${RED}error : invalid argument${CLEAR}"
