@@ -4,7 +4,7 @@ Repo created to store source code of churn prediction end-to-end machine learnin
 
 ## Exploration
 
-Firstly, column type and values are validated againts data description then target distribution was analysed. Subsequently, numerical and categorical feature distribution analysis by target class was done. Lastly, correlation was used to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/exploration.ipynb) to know more about the observations
+Firstly, column type and values are validated againts data description then target distribution was analysed. Subsequently, numerical and categorical feature distribution analysis by target class was done. Lastly, correlation was used to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/notebooks/exploration.ipynb) to know more about the observations
 
 ## Preprocessing
 
@@ -16,7 +16,7 @@ Initially, input data which has already been split during project set up was loa
 
 ## Modeling and tuning
 
-Preprocessed data are used for training models using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine algorithms. The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization preprocessing method (recall = 0.89 on churn class) was selected for random search tuning
+Preprocessed data are used for training models using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine algorithms. The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/notebooks/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization preprocessing method (recall = 0.89 on churn class) was selected for random search tuning
 
 <p align="center">
 <img width="600" src="https://github.com/ppkgtmm/churn-prediction/blob/main/images/evaluation-result.png?raw=true" />
@@ -24,7 +24,7 @@ Preprocessed data are used for training models using Decision Tree, Random Fores
 
 ## Inference
 
-An API is developed to serve predictions from model based on input data provided to `/predict` endpoint. Sample input used here was originally labeled as existing customer; however, some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/exploration.ipynb) for more information). The tuned model categorized the customer as churning
+An API is developed to serve predictions from model based on input data provided to `/predict` endpoint. Sample input used here was originally labeled as existing customer; however, some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/notebooks/exploration.ipynb) for more information). The tuned model categorized the customer as churning
 
 ```json
 [
