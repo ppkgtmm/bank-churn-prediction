@@ -61,14 +61,14 @@ Front end which provides predictions for supplied input data file was also imple
 Make sure to be inside project directory in your terminal
 
 #### Initialization
-
-1. Run the following to grant execute permission to helper script
+1. Install [Python 3.9](https://www.python.org/downloads/)
+2. Run the following to grant execute permission to helper script
 
 ```sh
 chmod +x ./run.sh
 ```
 
-2. Run helper script to initialize project
+3. Run helper script to initialize project
 
 ```sh
 ./run.sh init
