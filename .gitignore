@@ -2,6 +2,7 @@ venv
 .idea
 __pycache__
 .ipynb_checkpoints
+.DS_Store
 
 # generated from split data script
 train.csv
@@ -10,4 +11,3 @@ test.csv
 
 # airflow home
 airflow
-.DS_Store
