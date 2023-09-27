@@ -45,12 +45,12 @@ notebook() {
     jupyter notebook
 }
 
-scheduler() {
+airflow_scheduler() {
     setup
     airflow scheduler
 }
 
-webserver() {
+airflow_webserver() {
     setup
     airflow connections add "x_com_sqlite" --conn-uri "sqlite://${AIRFLOW_HOME}/airflow.db"
     airflow webserver -p 8080
@@ -74,10 +74,10 @@ then
     notebook
 elif [ "$1" == "scheduler" ]
 then
-    scheduler
+    airflow_scheduler
 elif [ "$1" == "airflow" ]
 then
-    webserver
+    airflow_webserver
 elif [ "$1" == "api" ]
 then
     api
