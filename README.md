@@ -1,66 +1,9 @@
 # churn prediction
 
-Repo created to store source code of churn prediction end-to-end machine learning project which involves work from data exploration, data preprocessing, model training, parameter tuning to model inference
-
-## Exploration
-
-Firstly, column type and values are validated againts data description then target distribution was analysed. Subsequently, numerical and categorical feature distribution analysis by target class was done. Lastly, correlation was used to analyse relationship between each feature and target. See [exploration notebook](https://github.com/ppkgtmm/churn-prediction/blob/main/notebooks/exploration.ipynb) to know more about the observations
-
-## Preprocessing
-
-Apache Airflow was used to build data processing pipeline (DAG) as illustrated in the image below
-
-<img src="https://github.com/ppkgtmm/churn-prediction/blob/main/images/dag-diagram.png?raw=true" />
-
-Initially, input data which has already been split during project set up was loaded. Then, categorical features to be used by model were selected using chi-square test of independence on training data at cutoff p-value of 0.05. Afterwards in parallel, each type of preprocessors to be validated were created and used to process the input datasets. Both preprocessors and processed data were then saved to subdirectories inside output folder for reuse. Lastly, a couple of tasks were executed for freeing up the disk space
-
-## Modeling and tuning
-
-Preprocessed data are used for training models using Decision Tree, Random Forest, Logistic Regression and Support Vector Machine algorithms. The results from modeling part can be found in [modeling notebook](https://github.com/ppkgtmm/hello-hello/blob/main/notebooks/modeling.ipynb). Recall metric is used as model selection criteria to minimize false negatives i.e. minimize no. of churning customer being mistakenly predicted as not churning. As a result, Support Vector Machine algorithm with feature standardization preprocessing method (recall = 0.89 on churn class) was selected for random search tuning
-
-<p align="center">
-<img width="600" src="https://github.com/ppkgtmm/churn-prediction/blob/main/images/evaluation-result.png?raw=true" />
-</p>
-
-## Inference
-
-An API is developed to serve predictions from model based on input data provided to `/predict` endpoint. Sample input used here was originally labeled as existing customer; however, some of the customer characteristics are similar to attrited customer (see [exploration notebook](https://github.com/ppkgtmm/hello-hello/blob/main/notebooks/exploration.ipynb) for more information). The tuned model categorized the customer as churning
-
-```json
-[
-  {
-    "clientnum": "",
-    "gender": "M",
-    "education_level": "Uneducated",
-    "customer_age": 57,
-    "dependent_count": 3,
-    "months_on_book": 38,
-    "total_relationship_count": 5,
-    "months_inactive_12_mon": 3,
-    "contacts_count_12_mon": 3,
-    "credit_limit": 2472,
-    "total_revolving_bal": 2457,
-    "total_amt_chng_q4_q1": 0.693,
-    "total_trans_amt": 1392,
-    "total_trans_ct": 33,
-    "total_ct_chng_q4_q1": 0.737,
-    "avg_utilization_ratio": 0.994,
-    "prediction": "Churn"
-  }
-]
-```
-
-![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/api-input.png?raw=true)
-![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/api-output.png?raw=true)
-
-Front end which provides predictions for supplied input data file was also implemented
-![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/front-end.png?raw=true)
-
-## Usage
-
 Make sure to be inside project directory in your terminal
 
-#### Initialization
+**Initialization**
+
 1. Install [Python 3.9](https://www.python.org/downloads/)
 2. Run the following to grant execute permission to helper script
 
@@ -74,7 +17,7 @@ chmod +x ./run.sh
 ./run.sh init
 ```
 
-#### Exploration and Modeling
+**Data Exploration and Model Training**
 
 1. Run command below to start jupyter notebook server
 
@@ -85,7 +28,7 @@ chmod +x ./run.sh
 2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
 3. Open notebook file and run cells (control + Enter) starting from the top
 
-#### Data preprocessing
+**Data Preprocessing**
 
 1. Open 2 terminal windows / tabs
 2. In the first terminal, run below to start airflow scheduler
@@ -104,7 +47,7 @@ chmod +x ./run.sh
 5. Search for `preprocessing_dag` which might take a while to appear and then click at the DAG name
 6. Click play button on the right of the screen to run the DAG (results will be saved to outputs folder in project directory)
 
-#### Model inference
+**Model inference**
 
 1. Run command below to start model API server
 
@@ -119,8 +62,10 @@ API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 ```sh
 ./run.sh ui
 ```
+**Final output**
+![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/front-end.png?raw=true)
 
-## References
+**References**
 
 - [credit-card-customers-churn-dataset](https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers)
 - [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity)
