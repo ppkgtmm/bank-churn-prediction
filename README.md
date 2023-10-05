@@ -17,7 +17,9 @@ chmod +x ./run.sh
 ./run.sh init
 ```
 
-**Data Exploration & Model Training**
+<br/>
+
+**Data Exploration**
 
 1. Run command below to start jupyter notebook server
 
@@ -26,7 +28,9 @@ chmod +x ./run.sh
 ```
 
 2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
-3. Open notebook file and run cells (control + Enter) starting from the top
+3. Open `exploration.ipynb` file and run cells (control + Enter) starting from the top
+
+<br/>
 
 **Data Preprocessing**
 
@@ -47,6 +51,21 @@ chmod +x ./run.sh
 5. Search for `preprocessing_dag` which might take a while to appear and then click at the DAG name
 6. Click play button on the right of the screen to run the DAG (results will be saved to outputs folder in project directory)
 
+<br/>
+
+**Model Training**
+
+1. Run command below to start jupyter notebook server
+
+```
+./run.sh notebook
+```
+
+2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
+3. Open `modeling.ipynb` file and run cells (control + Enter) starting from the top
+
+<br/>
+
 **Model Inference**
 
 1. Run command below to start model API server
@@ -62,8 +81,13 @@ API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 ```sh
 ./run.sh ui
 ```
+
+<br/>
+
 **Final Output**
 ![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/front-end.png?raw=true)
+
+<br/>
 
 **References**
 
