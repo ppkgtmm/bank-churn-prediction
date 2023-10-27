@@ -84,11 +84,6 @@ API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 
 <br/>
 
-**Final Output**
-![image](https://github.com/ppkgtmm/churn-prediction/blob/main/images/front-end.png?raw=true)
-
-<br/>
-
 **References**
 
 - [credit-card-customers-churn-dataset](https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers)
