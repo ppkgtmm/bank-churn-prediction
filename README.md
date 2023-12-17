@@ -17,7 +17,7 @@ chmod +x ./run.sh
 ./run.sh init
 ```
 
-<br/>
+
 
 ### Data Exploration
 
@@ -30,7 +30,7 @@ chmod +x ./run.sh
 2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
 3. Open `exploration.ipynb` file and run cells (control + Enter) starting from the top
 
-<br/>
+
 
 ### Data Preprocessing
 
@@ -51,7 +51,7 @@ chmod +x ./run.sh
 5. Search for `preprocessing_dag` which might take a while to appear and then click at the DAG name
 6. Click play button on the right of the screen to run the DAG (results will be saved to outputs folder in project directory)
 
-<br/>
+
 
 ### Model Training
 
@@ -64,7 +64,7 @@ chmod +x ./run.sh
 2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
 3. Open `modeling.ipynb` file and run cells (control + Enter) starting from the top
 
-<br/>
+
 
 ### Model Inference
 
@@ -82,7 +82,7 @@ API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 ./run.sh ui
 ```
 
-<br/>
+
 
 ### References
 
