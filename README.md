@@ -2,7 +2,7 @@
 
 Make sure to be inside project directory in your terminal
 
-**Initialization**
+### Initialization
 
 1. Install [Python 3.9](https://www.python.org/downloads/)
 2. Run the following to grant execute permission to helper script
@@ -19,7 +19,7 @@ chmod +x ./run.sh
 
 <br/>
 
-**Data Exploration**
+### Data Exploration
 
 1. Run command below to start jupyter notebook server
 
@@ -32,7 +32,7 @@ chmod +x ./run.sh
 
 <br/>
 
-**Data Preprocessing**
+### Data Preprocessing
 
 1. Open 2 terminal windows / tabs
 2. In the first terminal, run below to start airflow scheduler
@@ -53,7 +53,7 @@ chmod +x ./run.sh
 
 <br/>
 
-**Model Training**
+### Model Training
 
 1. Run command below to start jupyter notebook server
 
@@ -66,7 +66,7 @@ chmod +x ./run.sh
 
 <br/>
 
-**Model Inference**
+### Model Inference
 
 1. Run command below to start model API server
 
@@ -84,7 +84,7 @@ API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 
 <br/>
 
-**References**
+### References
 
 - [credit-card-customers-churn-dataset](https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers)
 - [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity)
