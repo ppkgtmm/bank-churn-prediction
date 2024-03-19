@@ -1,0 +1,13 @@
+customers churn dataset = https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers
+multicollinearity = https://en.wikipedia.org/wiki/Multicollinearity
+airflow quick start = https://airflow.apache.org/docs/apache-airflow/stable/start/local.html
+airflow modules management = https://airflow.apache.org/docs/apache-airflow/stable/modules_management.html
+import module airflow = https://stackoverflow.com/questions/50150384/importing-local-module-python-script-in-airflow-dag
+dataframe styling palette = https://pandas.pydata.org/docs/user_guide/style.html
+sklearn randomized search = https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
+sklearn metrics scorer = https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+saving loading pickle = https://stackoverflow.com/questions/4530611/saving-and-loading-objects-and-using-pickle
+fast api framework = https://fastapi.tiangolo.com/
+dataframe to json = https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html
+dynamical enum python = https://stackoverflow.com/questions/33690064/dynamically-create-an-enum-with-custom-values-in-python
+manage airflow connections = https://airflow.apache.org/docs/apache-airflow/2.2.4/howto/connection.html
