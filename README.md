@@ -2,81 +2,87 @@
 
 Make sure to be inside project directory in your terminal
 
-### Initialization
+## initialization
 
-1. Install [Python 3.9](https://www.python.org/downloads/)
-2. Run the following to grant execute permission to helper script
+1. install [python 3.9](https://www.python.org/downloads/)
+
+2. run the following to grant helper script execution
 
 ```sh
 chmod +x ./run.sh
 ```
 
-3. Run helper script to initialize project
+3. run helper script to initialize project
 
 ```sh
 ./run.sh init
 ```
 
+## data exploration
 
-
-### Data Exploration
-
-1. Run command below to start jupyter notebook server
+1. run command below to start jupyter notebook server
 
 ```
 ./run.sh notebook
 ```
 
-2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
-3. Open `exploration.ipynb` file and run cells (control + Enter) starting from the top
+2. navigate to `notebooks` folder in the browser tab automatically opened by jupyter
+
+3. open `exploration.ipynb` file and run cells (control + enter) starting from the top
 
 
 
-### Data Preprocessing
+## data preprocessing
 
-1. Open 2 terminal windows / tabs
-2. In the first terminal, run below to start airflow scheduler
+1. open 2 terminal windows or tabs
+
+2. in the first terminal, run below to start airflow scheduler
 
 ```sh
 ./run.sh scheduler
 ```
 
-3. In the second terminal, run following to to start airflow web server
+3. in the second terminal, run following to start airflow web server
 
 ```sh
 ./run.sh airflow
 ```
 
-4. Navigate to airflow web UI at `http://localhost:8080/`, input `admin` for both text boxes
-5. Search for `preprocessing_dag` which might take a while to appear and then click at the DAG name
-6. Click play button on the right of the screen to run the DAG (results will be saved to outputs folder in project directory)
+4. navigate to airflow web UI at http://localhost:8080/, input `admin` for both text boxes
+
+5. search for `preprocessing_dag` which might take a while to appear and then click at the DAG name
+
+6. click play button on the right of the screen to run the DAG
+
+results will be saved to outputs folder in project directory
 
 
 
-### Model Training
+## model training
 
-1. Run command below to start jupyter notebook server
+1. run command below to start jupyter notebook server
 
 ```
 ./run.sh notebook
 ```
 
-2. Navigate to `notebooks` folder in the browser tab automatically opened by jupyter
-3. Open `modeling.ipynb` file and run cells (control + Enter) starting from the top
+2. navigate to `notebooks` folder in the browser tab automatically opened by jupyter
+
+3. open `modeling.ipynb` file and run cells (control + enter) starting from the top
 
 
 
-### Model Inference
+## model inference
 
-1. Run command below to start model API server
+1. run command below to start model api server
 
 ```sh
 ./run.sh api
 ```
 
-API explorer (Swagger UI) is available at `http://localhost:8000/docs`
+api explorer (Swagger UI) will be available at http://localhost:8000/docs
 
-2. Launch frontend for interaction with model
+2. launch frontend for interaction with model
 
 ```sh
 ./run.sh ui
@@ -84,7 +90,7 @@ API explorer (Swagger UI) is available at `http://localhost:8000/docs`
 
 
 
-### References
+## references
 
 - [credit-card-customers-churn-dataset](https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers)
 - [multicollinearity](https://en.wikipedia.org/wiki/Multicollinearity)
