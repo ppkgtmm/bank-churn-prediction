@@ -1,6 +1,6 @@
-# churn prediction
+# ❗churn prediction
 
-Make sure to be inside project directory in your terminal
+machine learning model built to identify customers who are at risk of churning 
 
 ## initialization
 
